@@ -1,0 +1,12 @@
+Flask
+Flask-SQLAlchemy
+Flask-Migrate
+Flask-JWT-Extended
+Flask-CORS
+marshmallow
+psycopg2-binary
+python-dotenv
+Pillow
+APScheduler
+google-auth
+gunicorn

@@ -1,0 +1,96 @@
+# ==========================================
+# Python / Back-end
+# ==========================================
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual Environments
+venv/
+.venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+Back-end/venv/
+Back-end/.venv/
+
+# Django/Flask/FastAPI specific (if any)
+instance/
+.webassets-cache
+
+# ==========================================
+# JavaScript & Node / Front-end
+# ==========================================
+node_modules/
+Front-end/node_modules/
+/dist
+/dist-ssr
+Front-end/dist/
+Front-end/dist-ssr/
+.eslintcache
+.parcel-cache
+.cache/
+Front-end/public
+Front-end/src/assets
+
+# ==========================================
+# Environment Variables & Secrets
+# ==========================================
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+Back-end/.env
+Front-end/.env
+
+# ==========================================
+# OS & System Files
+# ==========================================
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# ==========================================
+# Editors & IDEs
+# ==========================================
+.vscode/
+!.vscode/extensions.json
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+*.swo
+*.swn
+.project
+.classpath
+.settings/
+
+# ==========================================
+# Logs
+# ==========================================
+*.log
+logs/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+Tasks
+
+backend/.env
+backend/venv/
+backend/uploads/
+backend/__pycache__/
+backend/**/__pycache__/
+frontend/.env
+frontend/node_modules/
+frontend/dist/
