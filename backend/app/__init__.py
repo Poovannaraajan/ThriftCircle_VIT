@@ -26,6 +26,9 @@ def create_app(config_name="development"):
     from app.routes.auth import auth_bp
     app.register_blueprint(auth_bp, url_prefix="/api/auth")
     
+    from app.routes.listings import listings_bp
+    app.register_blueprint(listings_bp, url_prefix="/api/listings")
+    
     uploads_dir = os.path.join(app.root_path, '..', 'uploads')
     os.makedirs(uploads_dir, exist_ok=True)
     

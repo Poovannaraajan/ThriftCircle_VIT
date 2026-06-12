@@ -21,10 +21,12 @@ def google_login():
         payload = id_token.verify_oauth2_token(
             credential,
             google_requests.Request(),
-            current_app.config["GOOGLE_CLIENT_ID"]
+            current_app.config["GOOGLE_CLIENT_ID"],
+            clock_skew_in_seconds=10
         )
-    except ValueError:
-        return jsonify({"error": "Invalid token"}), 401
+    except ValueError as e:
+        print(f"Token validation error: {e}")
+        return jsonify({"error": f"Invalid token: {str(e)}"}), 401
 
     if payload.get("hd") != "vitstudent.ac.in":
         return jsonify({"error": "Only vitstudent.ac.in accounts are allowed"}), 403
