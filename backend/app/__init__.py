@@ -23,6 +23,9 @@ def create_app(config_name="development"):
     jwt.init_app(app)
     cors.init_app(app, resources={r"/api/*": {"origins": "*"}})
     
+    from app.routes.auth import auth_bp
+    app.register_blueprint(auth_bp, url_prefix="/api/auth")
+    
     uploads_dir = os.path.join(app.root_path, '..', 'uploads')
     os.makedirs(uploads_dir, exist_ok=True)
     
