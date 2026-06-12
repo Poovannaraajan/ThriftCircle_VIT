@@ -58,6 +58,7 @@ export const LandingPage = () => {
                 shape="rectangular"
                 size="large"
                 theme="outline"
+                hosted_domain="vitstudent.ac.in"
               />
               {error && <p className="text-sm font-medium text-red-500">{error}</p>}
             </div>
