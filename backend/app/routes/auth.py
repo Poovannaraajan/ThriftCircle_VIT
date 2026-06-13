@@ -1,5 +1,6 @@
 from flask import Blueprint, request, jsonify, current_app
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
+import re
 from google.oauth2 import id_token
 from google.auth.transport import requests as google_requests
 from marshmallow import ValidationError
@@ -36,16 +37,26 @@ def google_login():
     name = payload.get("name")
     avatar_url = payload.get("picture")
 
+    reg_no = None
+    if name:
+        match = re.search(r'\s([0-9]{2}[A-Za-z]{3}[0-9]{4})$', name)
+        if match:
+            reg_no = match.group(1).upper()
+            name = name[:match.start()].strip()
+
     user = User.query.filter_by(google_id=google_id).first()
 
     if user:
         user.name = name
         user.avatar_url = avatar_url
+        if reg_no:
+            user.reg_no = reg_no
     else:
         user = User(
             google_id=google_id,
             email=email,
             name=name,
+            reg_no=reg_no,
             avatar_url=avatar_url
         )
         db.session.add(user)
