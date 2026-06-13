@@ -22,7 +22,7 @@ def get_categories():
 def get_my_listings():
     current_user_id = get_jwt_identity()
     listings = Listing.query.filter_by(seller_id=current_user_id).order_by(Listing.created_at.desc()).all()
-    return jsonify([listing.to_dict(include_seller=False) for listing in listings]), 200
+    return jsonify([listing.to_dict(include_seller=True, include_contact=True) for listing in listings]), 200
 
 @listings_bp.route("/uploads/<filename>", methods=["GET"])
 def get_upload(filename):
@@ -93,6 +93,7 @@ def create_listing():
     return jsonify(listing.to_dict(include_seller=True, include_contact=True)), 201
 
 @listings_bp.route("/", methods=["GET"])
+@jwt_required(optional=True)
 def get_listings():
     args = request.args.to_dict()
     schema = ListingFilterSchema()
@@ -127,7 +128,10 @@ def get_listings():
     per_page = params["per_page"]
     paginated = query.paginate(page=page, per_page=per_page, error_out=False)
     
-    listings = [l.to_dict(include_seller=True, include_contact=False) for l in paginated.items]
+    current_user_id = get_jwt_identity()
+    include_contact = current_user_id is not None
+    
+    listings = [l.to_dict(include_seller=True, include_contact=include_contact) for l in paginated.items]
     
     return jsonify({
         "listings": listings,

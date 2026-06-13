@@ -91,7 +91,7 @@ export const CreateListingPage = () => {
       };
 
       const listing = await createListing(payload, images);
-      navigate(`/listings/${listing.id}`);
+      navigate(`/listings`);
     } catch (err: any) {
       setError(err.response?.data?.error || 'Failed to create listing');
     } finally {
@@ -101,7 +101,15 @@ export const CreateListingPage = () => {
 
   return (
     <div className="mx-auto max-w-3xl px-4 py-8">
-      <h1 className="mb-6 text-3xl font-bold text-gray-900">Post a Listing</h1>
+      <div className="mb-6 flex items-center justify-between">
+        <h1 className="text-3xl font-bold text-gray-900">Post a Listing</h1>
+        <button 
+          onClick={() => navigate('/listings')}
+          className="rounded border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
+        >
+          Cancel
+        </button>
+      </div>
       
       {error && (
         <div className="mb-6 rounded-lg bg-red-50 p-4 text-red-600 border border-red-200">

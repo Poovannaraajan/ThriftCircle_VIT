@@ -5,6 +5,8 @@ import { PhoneNumberModal } from './components/PhoneNumberModal';
 import { ProtectedRoute } from './components/ProtectedRoute';
 import { CreateListingPage } from './pages/CreateListingPage';
 import { BrowsePage } from './pages/BrowsePage';
+import { ListingDetailPage } from './pages/ListingDetailPage';
+import { MyListingsPage } from './pages/MyListingsPage';
 
 function App() {
   const { needsPhone } = useAuth();
@@ -15,11 +17,23 @@ function App() {
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/listings" element={<BrowsePage />} />
-        <Route path="/listings/new" element={
-          <ProtectedRoute>
-            <CreateListingPage />
-          </ProtectedRoute>
-        } />
+        <Route path="/listings/:id" element={<ListingDetailPage />} />
+        <Route 
+          path="/listings/new" 
+          element={
+            <ProtectedRoute>
+              <CreateListingPage />
+            </ProtectedRoute>
+          } 
+        />
+        <Route 
+          path="/my-listings" 
+          element={
+            <ProtectedRoute>
+              <MyListingsPage />
+            </ProtectedRoute>
+          } 
+        />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </>
