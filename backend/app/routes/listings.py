@@ -29,6 +29,40 @@ def get_upload(filename):
     uploads_dir = os.path.abspath(os.path.join(current_app.root_path, '..', 'uploads'))
     return send_from_directory(uploads_dir, filename)
 
+@listings_bp.route("/<string:listing_id>/status", methods=["PATCH"])
+@jwt_required()
+def update_listing_status(listing_id):
+    current_user_id = get_jwt_identity()
+    new_status = request.json.get("status") if request.json else None
+    
+    allowed_statuses = ["active", "reserved", "sold", "expired"]
+    if new_status not in allowed_statuses:
+        return jsonify({"error": f"Invalid status. Must be one of: {', '.join(allowed_statuses)}"}), 422
+        
+    listing = Listing.query.get(listing_id)
+    if not listing:
+        return jsonify({"error": "Listing not found"}), 404
+        
+    if listing.seller_id != current_user_id:
+        return jsonify({"error": "You can only modify your own listings"}), 403
+        
+    if listing.status == "sold":
+        return jsonify({"error": "Listing is sold and cannot be modified"}), 422
+        
+    valid_transitions = {
+        "active": ["reserved", "expired"],
+        "reserved": ["active", "sold"],
+        "expired": ["active"]
+    }
+    
+    if new_status not in valid_transitions.get(listing.status, []):
+        return jsonify({"error": f"Cannot transition from {listing.status} to {new_status}"}), 422
+        
+    listing.status = new_status
+    db.session.commit()
+    
+    return jsonify(listing.to_dict(include_seller=True, include_contact=True)), 200
+
 @listings_bp.route("/<string:listing_id>", methods=["GET"])
 @jwt_required(optional=True)
 def get_listing(listing_id):

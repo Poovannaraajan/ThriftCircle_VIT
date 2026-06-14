@@ -39,4 +39,20 @@ def create_app(config_name="development"):
     with app.app_context():
         from app import models
         
+    from apscheduler.schedulers.background import BackgroundScheduler
+    from app.jobs.expiry import expire_old_listings
+
+    scheduler = BackgroundScheduler()
+    scheduler.add_job(
+        func=expire_old_listings,
+        args=[app],
+        trigger="cron",
+        hour=0,
+        minute=0,
+        id="expire_listings",
+        replace_existing=True,
+    )
+    if not app.config.get("TESTING"):
+        scheduler.start()
+        
     return app

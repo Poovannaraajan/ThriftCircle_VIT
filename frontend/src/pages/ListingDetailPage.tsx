@@ -1,8 +1,10 @@
 import { useState } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { Header } from '../components/Header';
-import { fetchListing, getImageUrl } from '../api/listings';
+import { fetchListing, getImageUrl, updateListingStatus } from '../api/listings';
+import { parseApiError } from '../utils/errors';
+import type { ListingStatus } from '../types/listing';
 import { useAuth } from '../hooks/useAuth';
 import { SignInOverlay } from '../components/SignInOverlay';
 
@@ -25,6 +27,18 @@ export const ListingDetailPage = () => {
   
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [showSignIn, setShowSignIn] = useState(false);
+  const [statusError, setStatusError] = useState<string | null>(null);
+
+  const queryClient = useQueryClient();
+
+  const statusMutation = useMutation({
+    mutationFn: (newStatus: ListingStatus) => updateListingStatus(id!, newStatus),
+    onSuccess: () => {
+      setStatusError(null);
+      queryClient.invalidateQueries({ queryKey: ['listing', id] });
+    },
+    onError: (err) => setStatusError(parseApiError(err)),
+  });
 
   const { data: listing, isLoading, error } = useQuery({
     queryKey: ['listing', id],
@@ -208,8 +222,22 @@ export const ListingDetailPage = () => {
                     🔒 Sign in to view contact details
                   </button>
                 ) : isOwner ? (
-                  <div className="rounded-lg bg-gray-50 p-4 text-center text-sm font-medium text-gray-600 border border-gray-200">
-                    This is your listing. <br/> (Status management coming in Day 6)
+                  <div className="rounded-lg bg-gray-50 p-4 border border-gray-200">
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Manage Status</label>
+                    <select
+                      value={listing.status}
+                      disabled={statusMutation.isPending || listing.status === 'sold'}
+                      onChange={(e) => statusMutation.mutate(e.target.value as ListingStatus)}
+                      className="w-full rounded-lg border border-gray-300 p-2.5 text-sm font-medium bg-white focus:border-blue-500 focus:ring-1 focus:ring-blue-500 disabled:bg-gray-100 disabled:text-gray-500"
+                    >
+                      <option value="active">Active</option>
+                      <option value="reserved">Reserved</option>
+                      <option value="sold" disabled={listing.status !== 'reserved' && listing.status !== 'sold'}>Sold</option>
+                      <option value="expired" disabled={listing.status === 'sold'}>Expired (Close listing)</option>
+                    </select>
+                    {statusError && (
+                      <p className="mt-2 text-xs font-medium text-red-600">{statusError}</p>
+                    )}
                   </div>
                 ) : (
                   <div className="space-y-3 rounded-lg bg-blue-50 p-4 border border-blue-100">

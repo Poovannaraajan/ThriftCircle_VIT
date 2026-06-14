@@ -55,3 +55,8 @@ export const getImageUrl = (relativePath: string): string => {
   const baseUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
   return `${baseUrl}/api/listings/${relativePath}`;
 };
+
+export const updateListingStatus = async (id: string, status: string): Promise<Listing> => {
+  const response = await api.patch<Listing>(`/api/listings/${id}/status`, { status });
+  return response.data;
+};
