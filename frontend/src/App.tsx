@@ -4,6 +4,7 @@ import { LandingPage } from './pages/LandingPage';
 import { PhoneNumberModal } from './components/PhoneNumberModal';
 import { ProtectedRoute } from './components/ProtectedRoute';
 import { CreateListingPage } from './pages/CreateListingPage';
+import { EditListingPage } from './pages/EditListingPage';
 import { BrowsePage } from './pages/BrowsePage';
 import { ListingDetailPage } from './pages/ListingDetailPage';
 import { MyListingsPage } from './pages/MyListingsPage';
@@ -24,6 +25,14 @@ function App() {
           element={
             <ProtectedRoute>
               <CreateListingPage />
+            </ProtectedRoute>
+          } 
+        />
+        <Route 
+          path="/listings/:id/edit" 
+          element={
+            <ProtectedRoute>
+              <EditListingPage />
             </ProtectedRoute>
           } 
         />

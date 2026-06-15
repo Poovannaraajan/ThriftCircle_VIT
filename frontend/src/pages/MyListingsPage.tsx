@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { Link, useNavigate } from 'react-router-dom';
 import { Header } from '../components/Header';
-import { fetchMyListings, updateListingStatus, getImageUrl } from '../api/listings';
+import { fetchMyListings, updateListingStatus, getImageUrl, deleteListing } from '../api/listings';
 import { parseApiError } from '../utils/errors';
 import { useToast } from '../contexts/ToastContext';
 import type { Listing, ListingStatus } from '../types/listing';
@@ -36,6 +36,17 @@ const ListingRow = ({ listing }: { listing: Listing }) => {
       setStatusError(errMsg);
       showToast(errMsg, 'error');
     },
+  });
+
+  const deleteMutation = useMutation({
+    mutationFn: () => deleteListing(listing.id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['my-listings'] });
+      showToast('Listing deleted successfully', 'success');
+    },
+    onError: (err) => {
+      showToast(parseApiError(err), 'error');
+    }
   });
 
   const isSold = listing.status === 'sold';
@@ -102,7 +113,7 @@ const ListingRow = ({ listing }: { listing: Listing }) => {
 
       {/* Actions */}
       <div className="flex items-start gap-3 shrink-0 mt-4 sm:mt-0 w-full sm:w-auto">
-        <div className="flex-1 sm:w-48">
+        <div className="flex-1 sm:w-40">
           <div className="relative">
             <select
               value={listing.status}
@@ -133,12 +144,34 @@ const ListingRow = ({ listing }: { listing: Listing }) => {
           {statusError && <p className="mt-1.5 text-[11px] font-bold text-red-600 leading-tight">{statusError}</p>}
         </div>
         
-        <Link 
-          to={`/listings/${listing.id}`}
-          className="rounded-lg bg-gray-100 px-4 py-2.5 text-sm font-bold text-gray-700 hover:bg-gray-200 transition whitespace-nowrap"
-        >
-          View →
-        </Link>
+        <div className="flex items-center gap-2">
+          <Link 
+            to={`/listings/${listing.id}`}
+            className="flex h-10 w-10 items-center justify-center rounded-lg bg-gray-100 text-gray-600 hover:bg-gray-200 hover:text-gray-900 transition"
+            title="View"
+          >
+            👁️
+          </Link>
+          <Link 
+            to={`/listings/${listing.id}/edit`}
+            className="flex h-10 w-10 items-center justify-center rounded-lg bg-blue-50 text-blue-600 hover:bg-blue-100 transition"
+            title="Edit"
+          >
+            ✏️
+          </Link>
+          <button
+            onClick={() => {
+              if (window.confirm("Are you sure you want to delete this listing? This action cannot be undone.")) {
+                deleteMutation.mutate();
+              }
+            }}
+            disabled={deleteMutation.isPending}
+            className="flex h-10 w-10 items-center justify-center rounded-lg bg-red-50 text-red-600 hover:bg-red-100 transition disabled:opacity-50"
+            title="Delete"
+          >
+            {deleteMutation.isPending ? "..." : "🗑️"}
+          </button>
+        </div>
       </div>
     </div>
   );

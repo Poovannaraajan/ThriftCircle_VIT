@@ -59,3 +59,12 @@ export const updateListingStatus = async (id: string, status: string): Promise<L
   const response = await api.patch<Listing>(`/api/listings/${id}/status`, { status });
   return response.data;
 };
+
+export const updateListingDetails = async (id: string, data: any): Promise<Listing> => {
+  const response = await api.put<Listing>(`/api/listings/${id}`, data);
+  return response.data;
+};
+
+export const deleteListing = async (id: string): Promise<void> => {
+  await api.delete(`/api/listings/${id}`);
+};
