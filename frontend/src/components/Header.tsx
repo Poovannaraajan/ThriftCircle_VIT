@@ -19,7 +19,13 @@ export const Header = () => {
 
           {user ? (
             <div className="flex items-center gap-4 border-l pl-4">
-              <Link to="/my-listings" className="text-sm font-semibold text-blue-600 hover:text-blue-800">
+              <button
+                onClick={() => navigate('/listings/new')}
+                className="hidden sm:flex items-center gap-1 rounded-lg bg-blue-600 px-4 py-2 text-sm font-bold text-white shadow-sm hover:bg-blue-700 transition"
+              >
+                + Post Item
+              </button>
+              <Link to="/my-listings" className="text-sm font-semibold text-gray-600 hover:text-gray-900 transition">
                 My Listings
               </Link>
               <div className="flex items-center gap-2">
