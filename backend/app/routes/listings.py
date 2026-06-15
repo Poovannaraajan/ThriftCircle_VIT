@@ -9,6 +9,8 @@ from app.models.category import Category
 from app.models.user import User
 from app.schemas.listing_schemas import CreateListingSchema, ListingFilterSchema
 from app.utils.images import save_listing_image, MAX_IMAGES_PER_LISTING
+from app import limiter
+import bleach
 
 listings_bp = Blueprint("listings_bp", __name__)
 
@@ -77,6 +79,7 @@ def get_listing(listing_id):
 
 @listings_bp.route("/", methods=["POST"])
 @jwt_required()
+@limiter.limit("20 per hour")
 def create_listing():
     current_user_id = get_jwt_identity()
     user = User.query.get(current_user_id)
@@ -94,6 +97,13 @@ def create_listing():
         validated_data = schema.load(form_data)
     except ValidationError as err:
         return jsonify({"error": err.messages}), 422
+        
+    validated_data["title"] = bleach.clean(validated_data["title"]).strip()
+    if not validated_data["title"]:
+        return jsonify({"error": "Title cannot be blank"}), 422
+        
+    if validated_data.get("description"):
+        validated_data["description"] = bleach.clean(validated_data["description"]).strip()
         
     category = Category.query.get(validated_data["category_id"])
     if not category:

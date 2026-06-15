@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Header } from '../components/Header';
 import { fetchMyListings, updateListingStatus, getImageUrl } from '../api/listings';
 import { parseApiError } from '../utils/errors';
+import { useToast } from '../contexts/ToastContext';
 import type { Listing, ListingStatus } from '../types/listing';
 
 function timeAgo(dateStr: string): string {
@@ -20,6 +21,7 @@ function daysUntil(dateStr: string): number {
 
 const ListingRow = ({ listing }: { listing: Listing }) => {
   const queryClient = useQueryClient();
+  const { showToast } = useToast();
   const [statusError, setStatusError] = useState<string | null>(null);
   
   const statusMutation = useMutation({
@@ -27,8 +29,13 @@ const ListingRow = ({ listing }: { listing: Listing }) => {
     onSuccess: () => {
       setStatusError(null);
       queryClient.invalidateQueries({ queryKey: ['my-listings'] });
+      showToast('Listing status updated', 'success');
     },
-    onError: (err) => setStatusError(parseApiError(err)),
+    onError: (err) => {
+      const errMsg = parseApiError(err);
+      setStatusError(errMsg);
+      showToast(errMsg, 'error');
+    },
   });
 
   const isSold = listing.status === 'sold';

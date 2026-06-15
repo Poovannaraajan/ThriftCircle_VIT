@@ -1,4 +1,4 @@
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import { useAuth } from './hooks/useAuth';
 import { LandingPage } from './pages/LandingPage';
 import { PhoneNumberModal } from './components/PhoneNumberModal';
@@ -7,6 +7,7 @@ import { CreateListingPage } from './pages/CreateListingPage';
 import { BrowsePage } from './pages/BrowsePage';
 import { ListingDetailPage } from './pages/ListingDetailPage';
 import { MyListingsPage } from './pages/MyListingsPage';
+import { NotFoundPage } from './pages/NotFoundPage';
 
 function App() {
   const { needsPhone } = useAuth();
@@ -34,7 +35,7 @@ function App() {
             </ProtectedRoute>
           } 
         />
-        <Route path="*" element={<Navigate to="/" replace />} />
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </>
   );

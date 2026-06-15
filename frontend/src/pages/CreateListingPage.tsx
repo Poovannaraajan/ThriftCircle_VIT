@@ -3,11 +3,14 @@ import type { ChangeEvent, FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 import { fetchCategories, createListing } from '../api/listings';
+import { parseApiError } from '../utils/errors';
+import { useToast } from '../contexts/ToastContext';
 import type { Category, ListingType, ListingCondition } from '../types/listing';
 
 export const CreateListingPage = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
+  const { showToast } = useToast();
   
   const [categories, setCategories] = useState<Category[]>([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -23,8 +26,10 @@ export const CreateListingPage = () => {
   const [previewUrls, setPreviewUrls] = useState<string[]>([]);
 
   useEffect(() => {
-    fetchCategories().then(setCategories).catch(console.error);
-  }, []);
+    fetchCategories()
+      .then(setCategories)
+      .catch((err) => showToast(parseApiError(err), 'error'));
+  }, [showToast]);
 
   // Cleanup object URLs to avoid memory leaks
   useEffect(() => {
@@ -71,9 +76,14 @@ export const CreateListingPage = () => {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
+    if (isSubmitting) return; // double-submit block
+    
     setError('');
 
-    if (!title.trim() || !categoryId) {
+    const trimmedTitle = title.trim();
+    const trimmedDesc = description.trim();
+
+    if (!trimmedTitle || !categoryId) {
       setError('Title and Category are required');
       return;
     }
@@ -82,8 +92,8 @@ export const CreateListingPage = () => {
 
     try {
       const payload = {
-        title,
-        description: description || undefined,
+        title: trimmedTitle,
+        description: trimmedDesc || undefined,
         price: listingType === 'free' ? null : (price ? parseFloat(price) : null),
         listing_type: listingType,
         condition: condition || null,
@@ -91,9 +101,12 @@ export const CreateListingPage = () => {
       };
 
       const listing = await createListing(payload, images);
+      showToast("Listing created successfully!", "success");
       navigate(`/listings`);
-    } catch (err: any) {
-      setError(err.response?.data?.error || 'Failed to create listing');
+    } catch (err: unknown) {
+      const errMsg = parseApiError(err);
+      setError(errMsg);
+      showToast(errMsg, 'error');
     } finally {
       setIsSubmitting(false);
     }

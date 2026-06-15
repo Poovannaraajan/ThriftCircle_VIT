@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useAuth } from '../hooks/useAuth';
+import { parseApiError } from '../utils/errors';
 
 export const PhoneNumberModal = () => {
   const { updatePhone } = useAuth();
@@ -9,6 +10,8 @@ export const PhoneNumberModal = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (isSubmitting) return;
+
     setError('');
 
     if (!/^[6-9]\d{9}$/.test(phone)) {
@@ -19,8 +22,8 @@ export const PhoneNumberModal = () => {
     setIsSubmitting(true);
     try {
       await updatePhone(phone);
-    } catch (err: any) {
-      setError(err.response?.data?.error || 'Failed to update phone number');
+    } catch (err: unknown) {
+      setError(parseApiError(err));
     } finally {
       setIsSubmitting(false);
     }

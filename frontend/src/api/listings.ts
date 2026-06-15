@@ -50,10 +50,9 @@ export const createListing = async (payload: CreateListingPayload, images: File[
   return response.data;
 };
 
-export const getImageUrl = (relativePath: string): string => {
-  if (!relativePath) return '';
-  const baseUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
-  return `${baseUrl}/api/listings/${relativePath}`;
+export const getImageUrl = (path: string): string => {
+  const baseUrl = import.meta.env.VITE_API_URL;
+  return `${baseUrl}/api/listings/uploads/${path.split('/').pop()}`;
 };
 
 export const updateListingStatus = async (id: string, status: string): Promise<Listing> => {

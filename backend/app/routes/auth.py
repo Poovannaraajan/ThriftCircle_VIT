@@ -4,13 +4,15 @@ import re
 from google.oauth2 import id_token
 from google.auth.transport import requests as google_requests
 from marshmallow import ValidationError
-from app import db
+from app import db, limiter
 from app.models.user import User
 from app.schemas.auth_schemas import PhoneSchema
+import bleach
 
 auth_bp = Blueprint("auth_bp", __name__)
 
 @auth_bp.route("/google", methods=["POST"])
+@limiter.limit("10 per minute")
 def google_login():
     data = request.get_json()
     credential = data.get("credential")
@@ -39,6 +41,7 @@ def google_login():
 
     reg_no = None
     if name:
+        name = bleach.clean(name).strip()
         match = re.search(r'\s([0-9]{2}[A-Za-z]{3}[0-9]{4})$', name)
         if match:
             reg_no = match.group(1).upper()
@@ -84,6 +87,7 @@ def get_me():
 
 @auth_bp.route("/me/phone", methods=["PATCH"])
 @jwt_required()
+@limiter.limit("5 per minute")
 def update_phone():
     current_user_id = get_jwt_identity()
     user = User.query.get(current_user_id)
