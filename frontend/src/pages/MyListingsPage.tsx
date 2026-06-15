@@ -152,10 +152,18 @@ export const MyListingsPage = () => {
       
       <main className="mx-auto w-full max-w-5xl flex-1 px-4 py-8 sm:px-6 lg:px-8">
         <div className="mb-8 flex items-center justify-between">
-          <h1 className="text-3xl font-extrabold text-gray-900 tracking-tight">My Listings</h1>
+          <div className="flex items-center gap-4">
+            <button 
+              onClick={() => navigate('/listings')} 
+              className="flex items-center text-sm font-bold text-gray-500 hover:text-gray-900 bg-gray-100 hover:bg-gray-200 px-3 py-1.5 rounded-lg transition"
+            >
+              ← Back
+            </button>
+            <h1 className="text-3xl font-extrabold text-gray-900 tracking-tight">My Listings</h1>
+          </div>
           <button
             onClick={() => navigate('/listings/new')}
-            className="rounded-lg bg-blue-600 px-5 py-2.5 text-sm font-bold text-white shadow hover:bg-blue-700 transition"
+            className="rounded-lg bg-blue-600 px-5 py-2.5 text-sm font-bold text-white shadow hover:bg-blue-700 transition hidden sm:block"
           >
             + Post New Item
           </button>
