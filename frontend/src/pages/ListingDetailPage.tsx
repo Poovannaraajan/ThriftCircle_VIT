@@ -2,11 +2,14 @@ import { useState } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { Header } from '../components/Header';
-import { fetchListing, getImageUrl, updateListingStatus } from '../api/listings';
+import { fetchListing, getImageUrl, updateListingStatus, deleteListing } from '../api/listings';
 import { parseApiError } from '../utils/errors';
 import type { ListingStatus } from '../types/listing';
 import { useAuth } from '../hooks/useAuth';
 import { SignInOverlay } from '../components/SignInOverlay';
+import { useToast } from '../contexts/ToastContext';
+import { PhoneNumberModal } from '../components/PhoneNumberModal';
+import { WishlistButton } from '../components/WishlistButton';
 
 function timeAgo(dateStr: string): string {
   const days = Math.floor((Date.now() - new Date(dateStr).getTime()) / 86400000);
@@ -170,9 +173,23 @@ export const ListingDetailPage = () => {
               )}
             </div>
 
-            <h1 className="mb-2 text-3xl font-extrabold text-gray-900 leading-tight">{listing.title}</h1>
+            <div className="flex items-start justify-between gap-4">
+              <div>
+                <h1 className="text-3xl font-extrabold text-gray-900 sm:text-4xl">
+                  {listing.title}
+                </h1>
+                <p className="mt-2 text-sm font-medium text-gray-500 flex items-center gap-2">
+                  <span>Posted {new Date(listing.created_at).toLocaleDateString()}</span>
+                  <span>•</span>
+                  <span className="flex items-center gap-1">{listing.category?.icon} {listing.category?.name}</span>
+                </p>
+              </div>
+              <div className="shrink-0 pt-1">
+                <WishlistButton listing_id={listing.id} size="md" />
+              </div>
+            </div>
             
-            <div className="mb-6 text-2xl font-bold text-gray-900">
+            <div className="my-6 text-2xl font-bold text-gray-900">
               {listing.listing_type === 'free' 
                 ? 'FREE' 
                 : listing.price === null 
@@ -201,16 +218,8 @@ export const ListingDetailPage = () => {
                     </div>
                   )}
                   <div>
-                    <div className="text-lg font-bold text-gray-900">
-                      {listing.seller?.name}
-                    </div>
-                    <div className="text-sm font-medium text-gray-600 flex items-center gap-2">
-                      {isLoggedIn && listing.seller?.reg_no && <span>{listing.seller.reg_no}</span>}
-                      {isLoggedIn && listing.seller?.reg_no && <span>•</span>}
-                      <span className="flex items-center text-yellow-600">
-                        ★ {listing.seller?.trust_score.toFixed(1)} trust score
-                      </span>
-                    </div>
+                    <h3 className="font-bold text-gray-900">{listing.seller?.name}</h3>
+                    <p className="text-sm text-gray-500">VIT Student</p>
                   </div>
                 </div>
 

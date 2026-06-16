@@ -33,10 +33,12 @@ def create_app(config_name="development"):
     limiter.init_app(app)
     
     from app.routes.auth import auth_bp
-    app.register_blueprint(auth_bp, url_prefix="/api/auth")
-    
     from app.routes.listings import listings_bp
+    from app.routes.wishlist import wishlist_bp
+
+    app.register_blueprint(auth_bp, url_prefix="/api/auth")
     app.register_blueprint(listings_bp, url_prefix="/api/listings")
+    app.register_blueprint(wishlist_bp, url_prefix="/api/wishlist")
     
     uploads_dir = os.path.join(app.root_path, '..', 'uploads')
     os.makedirs(uploads_dir, exist_ok=True)

@@ -8,6 +8,8 @@ import { EditListingPage } from './pages/EditListingPage';
 import { BrowsePage } from './pages/BrowsePage';
 import { ListingDetailPage } from './pages/ListingDetailPage';
 import { MyListingsPage } from './pages/MyListingsPage';
+import { WishlistPage } from './pages/WishlistPage';
+import { ProfilePage } from './pages/ProfilePage';
 import { NotFoundPage } from './pages/NotFoundPage';
 
 function App() {
@@ -41,6 +43,22 @@ function App() {
           element={
             <ProtectedRoute>
               <MyListingsPage />
+            </ProtectedRoute>
+          } 
+        />
+        <Route 
+          path="/wishlist" 
+          element={
+            <ProtectedRoute>
+              <WishlistPage />
+            </ProtectedRoute>
+          } 
+        />
+        <Route 
+          path="/profile" 
+          element={
+            <ProtectedRoute>
+              <ProfilePage />
             </ProtectedRoute>
           } 
         />

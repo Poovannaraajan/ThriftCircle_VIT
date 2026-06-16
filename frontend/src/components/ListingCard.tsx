@@ -1,8 +1,9 @@
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import type { Listing } from '../types/listing';
 import { getImageUrl } from '../api/listings';
 import { useAuth } from '../hooks/useAuth';
+import { WishlistButton } from './WishlistButton';
 import { SignInOverlay } from './SignInOverlay';
 
 interface ListingCardProps {
@@ -37,7 +38,7 @@ export const ListingCard = ({ listing }: ListingCardProps) => {
         onClick={() => navigate(`/listings/${listing.id}`)}
         className="group flex flex-col overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm transition-all hover:-translate-y-1 hover:shadow-md cursor-pointer"
       >
-        <div className="relative aspect-square w-full overflow-hidden bg-gray-100">
+        <div className="relative aspect-[4/3] w-full overflow-hidden bg-gray-100">
           {mainImage ? (
             <img 
               src={mainImage} 
@@ -52,6 +53,17 @@ export const ListingCard = ({ listing }: ListingCardProps) => {
           <span className={`absolute left-2 top-2 rounded px-2 py-1 text-xs font-bold uppercase tracking-wider ${typeColor}`}>
             {listing.listing_type}
           </span>
+          
+          {/* Wishlist Button Overlay */}
+          <div 
+            className="absolute right-3 top-3 z-10"
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+            }}
+          >
+            <WishlistButton listing_id={listing.id} size="sm" />
+          </div>
         </div>
 
         <div className="flex flex-1 flex-col p-4">
@@ -71,13 +83,14 @@ export const ListingCard = ({ listing }: ListingCardProps) => {
 
           <div className="mt-auto pt-3 border-t border-gray-100">
             <div className="flex items-center gap-2 mb-2">
-              <span className="text-xs font-medium text-gray-600">
-                {listing.seller?.name} 
-                {user && listing.seller?.reg_no && ` • ${listing.seller.reg_no}`}
-              </span>
-              <span className="flex items-center text-xs text-yellow-600 font-medium ml-auto">
-                ★ {listing.seller?.trust_score.toFixed(1)}
-              </span>
+              {listing.seller?.avatar_url ? (
+                <img src={listing.seller.avatar_url} alt={listing.seller.name} className="h-6 w-6 rounded-full" />
+              ) : (
+                <div className="h-6 w-6 rounded-full bg-blue-100 flex items-center justify-center text-xs font-bold text-blue-700">
+                  {listing.seller?.name.charAt(0)}
+                </div>
+              )}
+              <span className="text-xs font-medium text-gray-700 truncate">{listing.seller?.name}</span>
             </div>
 
             {user ? (

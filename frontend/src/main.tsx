@@ -7,6 +7,7 @@ import { AuthProvider } from './context/AuthContext';
 import './index.css';
 import App from './App.tsx';
 import { ToastProvider } from './contexts/ToastContext';
+import { WishlistProvider } from './context/WishlistContext';
 
 const queryClient = new QueryClient();
 
@@ -17,7 +18,9 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         <BrowserRouter>
           <AuthProvider>
             <ToastProvider>
-              <App />
+              <WishlistProvider>
+                <App />
+              </WishlistProvider>
             </ToastProvider>
           </AuthProvider>
         </BrowserRouter>

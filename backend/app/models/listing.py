@@ -19,8 +19,9 @@ class Listing(db.Model):
     expires_at = db.Column(db.DateTime(timezone=True), default=lambda: datetime.now(timezone.utc) + timedelta(days=30))
     created_at = db.Column(db.DateTime(timezone=True), default=lambda: datetime.now(timezone.utc))
 
-    seller = db.relationship("User", back_populates="listings")
     category = db.relationship("Category", back_populates="listings")
+    seller = db.relationship("User", back_populates="listings")
+    wishlists = db.relationship("Wishlist", back_populates="listing", lazy="dynamic")
 
     __table_args__ = (
         Index(
@@ -56,7 +57,6 @@ class Listing(db.Model):
             seller_data = {
                 "id": self.seller.id,
                 "name": self.seller.name,
-                "trust_score": self.seller.trust_score,
                 "avatar_url": self.seller.avatar_url
             }
             if include_contact:

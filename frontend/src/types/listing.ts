@@ -12,7 +12,6 @@ export interface Category {
 export interface SellerSummary {
   id: string;
   name: string;
-  trust_score: number;
   avatar_url: string | null;
   email?: string;
   phone_number?: string;
