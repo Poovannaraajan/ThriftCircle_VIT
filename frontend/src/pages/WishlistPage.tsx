@@ -6,7 +6,7 @@ import { Header } from '../components/Header';
 import { ListingCard } from '../components/ListingCard';
 
 export const WishlistPage = () => {
-  const [tab, setTab] = useState<'own' | 'other'>('other');
+  const [tab, setTab] = useState<'own' | 'other' | 'expired'>('other');
   const queryClient = useQueryClient();
 
   const { data, isLoading, isError } = useQuery({
@@ -44,6 +44,14 @@ export const WishlistPage = () => {
           >
             Other Listings
           </button>
+          <button
+            onClick={() => setTab('expired')}
+            className={`pb-4 px-2 font-medium text-sm transition-colors border-b-2 ${
+              tab === 'expired' ? 'border-purple-600 text-purple-600' : 'border-transparent text-gray-500 hover:text-gray-700'
+            }`}
+          >
+            Expired / Sold
+          </button>
         </div>
         
         {isLoading && (
@@ -74,14 +82,28 @@ export const WishlistPage = () => {
                   ))}
                 </div>
               )
-            ) : (
+            ) : tab === 'other' ? (
               data.other_listings.length === 0 ? (
                 <div className="text-center py-12 text-gray-500 bg-white rounded-xl border border-gray-100">
-                  You haven't saved any listings yet. Browse listings to find something.
+                  You haven't saved any active listings yet. Browse listings to find something.
                 </div>
               ) : (
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                   {data.other_listings.map(listing => (
+                    <div key={listing.id} onClick={() => queryClient.invalidateQueries({ queryKey: ['wishlist'] })}>
+                      <ListingCard listing={listing} />
+                    </div>
+                  ))}
+                </div>
+              )
+            ) : (
+              data.expired_listings.length === 0 ? (
+                <div className="text-center py-12 text-gray-500 bg-white rounded-xl border border-gray-100">
+                  No expired or sold listings in your wishlist.
+                </div>
+              ) : (
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                  {data.expired_listings.map(listing => (
                     <div key={listing.id} onClick={() => queryClient.invalidateQueries({ queryKey: ['wishlist'] })}>
                       <ListingCard listing={listing} />
                     </div>

@@ -16,22 +16,26 @@ def get_wishlist():
     
     own_listings = []
     other_listings = []
+    expired_listings = []
     
     for item in wishlists:
         listing = item.listing
         if not listing:
             continue
             
-        listing_data = listing.to_dict(include_seller=True, include_contact=False)
+        listing_data = listing.to_dict(include_seller=True, include_contact=True)
         
-        if listing.seller_id == current_user_id:
+        if listing.status in ["expired", "sold"]:
+            expired_listings.append(listing_data)
+        elif listing.seller_id == current_user_id:
             own_listings.append(listing_data)
         else:
             other_listings.append(listing_data)
             
     return jsonify({
         "own_listings": own_listings,
-        "other_listings": other_listings
+        "other_listings": other_listings,
+        "expired_listings": expired_listings
     }), 200
 
 @wishlist_bp.route("/", methods=["POST"])

@@ -15,6 +15,7 @@ export interface SellerSummary {
   avatar_url: string | null;
   email?: string;
   phone_number?: string;
+  reg_no?: string;
 }
 
 export interface Listing {

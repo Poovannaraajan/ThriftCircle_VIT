@@ -4,6 +4,7 @@ import type { Listing } from '../types/listing';
 interface WishlistResponse {
   own_listings: Listing[];
   other_listings: Listing[];
+  expired_listings: Listing[];
 }
 
 export const fetchWishlist = async (): Promise<WishlistResponse> => {

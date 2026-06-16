@@ -90,7 +90,10 @@ export const ListingCard = ({ listing }: ListingCardProps) => {
                   {listing.seller?.name.charAt(0)}
                 </div>
               )}
-              <span className="text-xs font-medium text-gray-700 truncate">{listing.seller?.name}</span>
+              <span className="text-xs font-medium text-gray-700 truncate">
+                {listing.seller?.name}
+                {user && listing.seller?.reg_no && ` • ${listing.seller.reg_no}`}
+              </span>
             </div>
 
             {user ? (

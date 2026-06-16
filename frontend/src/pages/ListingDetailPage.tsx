@@ -219,7 +219,9 @@ export const ListingDetailPage = () => {
                   )}
                   <div>
                     <h3 className="font-bold text-gray-900">{listing.seller?.name}</h3>
-                    <p className="text-sm text-gray-500">VIT Student</p>
+                    <p className="text-sm text-gray-500">
+                      VIT Student {isLoggedIn && listing.seller?.reg_no && `• ${listing.seller.reg_no}`}
+                    </p>
                   </div>
                 </div>
 

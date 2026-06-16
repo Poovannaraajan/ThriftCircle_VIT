@@ -62,6 +62,7 @@ class Listing(db.Model):
             if include_contact:
                 seller_data["email"] = self.seller.email
                 seller_data["phone_number"] = self.seller.phone_number
+                seller_data["reg_no"] = self.seller.reg_no
             data["seller"] = seller_data
 
         return data
