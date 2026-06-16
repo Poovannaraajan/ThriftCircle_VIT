@@ -42,7 +42,7 @@ export const ProfilePage = () => {
   if (!user) return null;
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col">
+    <div className="min-h-screen bg-[#f8f5fd] flex flex-col">
       <Header />
       
       <main className="flex-grow container mx-auto px-4 py-8 max-w-2xl">
@@ -64,7 +64,7 @@ export const ProfilePage = () => {
             <h1 className="text-2xl font-bold text-gray-900">{user.name}</h1>
             <p className="text-gray-500">{user.email}</p>
             {user.reg_no && (
-              <p className="mt-2 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+              <p className="mt-2 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary-100 text-primary-800">
                 {user.reg_no}
               </p>
             )}

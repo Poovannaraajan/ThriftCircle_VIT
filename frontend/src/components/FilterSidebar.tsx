@@ -39,7 +39,7 @@ export const FilterSidebar = ({ categories, filters, onChange, onReset }: Filter
         <h2 className="text-lg font-bold text-gray-900">Filters</h2>
         <button 
           onClick={onReset}
-          className="text-sm font-medium text-blue-600 hover:text-blue-800"
+          className="text-sm font-medium text-primary-600 hover:text-primary-800"
         >
           Reset All
         </button>
@@ -76,7 +76,7 @@ export const FilterSidebar = ({ categories, filters, onChange, onReset }: Filter
             value={minPrice}
             onChange={e => setMinPrice(e.target.value)}
             onBlur={handlePriceBlur}
-            className="w-full rounded-lg border border-gray-300 p-2 text-sm outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+            className="w-full rounded-lg border border-gray-300 p-2 text-sm outline-none focus:border-primary-500 focus:ring-1 focus:ring-primary-500"
           />
           <span className="text-gray-400">-</span>
           <input
@@ -86,7 +86,7 @@ export const FilterSidebar = ({ categories, filters, onChange, onReset }: Filter
             value={maxPrice}
             onChange={e => setMaxPrice(e.target.value)}
             onBlur={handlePriceBlur}
-            className="w-full rounded-lg border border-gray-300 p-2 text-sm outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+            className="w-full rounded-lg border border-gray-300 p-2 text-sm outline-none focus:border-primary-500 focus:ring-1 focus:ring-primary-500"
           />
         </div>
       </div>
@@ -99,7 +99,7 @@ export const FilterSidebar = ({ categories, filters, onChange, onReset }: Filter
             onClick={() => onChange({ category_id: null, page: 1 })}
             className={`flex w-full items-center rounded-lg px-3 py-2 text-sm transition ${
               filters.category_id == null 
-                ? 'bg-blue-50 text-blue-700 font-bold' 
+                ? 'bg-primary-50 text-primary-700 font-bold' 
                 : 'text-gray-600 hover:bg-gray-100'
             }`}
           >
@@ -111,7 +111,7 @@ export const FilterSidebar = ({ categories, filters, onChange, onReset }: Filter
               onClick={() => onChange({ category_id: c.id, page: 1 })}
               className={`flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm transition ${
                 filters.category_id === c.id 
-                  ? 'bg-blue-50 text-blue-700 font-bold' 
+                  ? 'bg-primary-50 text-primary-700 font-bold' 
                   : 'text-gray-600 hover:bg-gray-100'
               }`}
             >

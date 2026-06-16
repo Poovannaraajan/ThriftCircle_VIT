@@ -51,7 +51,7 @@ export const PhoneNumberModal = () => {
                 value={phone}
                 onChange={(e) => setPhone(e.target.value.replace(/\D/g, ''))}
                 className={`w-full rounded-lg border p-3 pl-12 text-gray-900 outline-none transition-all ${
-                  error ? 'border-red-500 focus:ring-2 focus:ring-red-200' : 'border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200'
+                  error ? 'border-red-500 focus:ring-2 focus:ring-red-200' : 'border-gray-300 focus:border-primary-500 focus:ring-2 focus:ring-primary-200'
                 }`}
                 placeholder="9876543210"
                 disabled={isSubmitting}
@@ -63,7 +63,7 @@ export const PhoneNumberModal = () => {
           <button
             type="submit"
             disabled={isSubmitting || phone.length !== 10}
-            className="mt-2 flex w-full items-center justify-center rounded-lg bg-blue-600 p-3 font-semibold text-white transition-colors hover:bg-blue-700 disabled:bg-blue-300"
+            className="mt-2 flex w-full items-center justify-center rounded-lg bg-primary-600 p-3 font-semibold text-white transition-colors hover:bg-primary-700 disabled:bg-primary-300"
           >
             {isSubmitting ? 'Saving...' : 'Complete Profile'}
           </button>

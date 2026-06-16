@@ -73,7 +73,7 @@ const ListingRow = ({ listing }: { listing: Listing }) => {
           <h3 className={`truncate font-bold text-lg ${isSold ? 'text-gray-500' : 'text-gray-900'}`}>
             {listing.title}
           </h3>
-          <span className="shrink-0 rounded bg-blue-50 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-blue-700">
+          <span className="shrink-0 rounded bg-primary-50 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-primary-700">
             {listing.listing_type}
           </span>
         </div>
@@ -119,10 +119,10 @@ const ListingRow = ({ listing }: { listing: Listing }) => {
               value={listing.status}
               disabled={statusMutation.isPending || isSold}
               onChange={(e) => statusMutation.mutate(e.target.value as ListingStatus)}
-              className={`w-full appearance-none rounded-lg border py-2.5 pl-3 pr-10 text-sm font-bold outline-none focus:ring-2 focus:ring-blue-500 transition-colors ${
+              className={`w-full appearance-none rounded-lg border py-2.5 pl-3 pr-10 text-sm font-bold outline-none focus:ring-2 focus:ring-primary-500 transition-colors ${
                 isReserved ? 'border-amber-300 bg-amber-50 text-amber-900' :
                 isExpired ? 'border-red-200 bg-red-50 text-red-900' :
-                'border-gray-200 bg-white text-gray-700 hover:bg-gray-50'
+                'border-gray-200 bg-white text-gray-700 hover:bg-[#f8f5fd]'
               } disabled:opacity-70 disabled:cursor-not-allowed`}
             >
               <option value="active">Active</option>
@@ -154,7 +154,7 @@ const ListingRow = ({ listing }: { listing: Listing }) => {
           </Link>
           <Link 
             to={`/listings/${listing.id}/edit`}
-            className="flex h-10 w-10 items-center justify-center rounded-lg bg-blue-50 text-blue-600 hover:bg-blue-100 transition"
+            className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary-50 text-primary-600 hover:bg-primary-100 transition"
             title="Edit"
           >
             ✏️
@@ -187,7 +187,7 @@ export const MyListingsPage = () => {
   const skeletons = Array(3).fill(0);
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col">
+    <div className="min-h-screen bg-[#f8f5fd] flex flex-col">
       <Header />
       
       <main className="mx-auto w-full max-w-5xl flex-1 px-4 py-8 sm:px-6 lg:px-8">
@@ -203,7 +203,7 @@ export const MyListingsPage = () => {
           </div>
           <button
             onClick={() => navigate('/listings/new')}
-            className="rounded-lg bg-blue-600 px-5 py-2.5 text-sm font-bold text-white shadow hover:bg-blue-700 transition hidden sm:block"
+            className="rounded-lg bg-primary-600 px-5 py-2.5 text-sm font-bold text-white shadow hover:bg-primary-700 transition hidden sm:block"
           >
             + Post New Item
           </button>
@@ -230,7 +230,7 @@ export const MyListingsPage = () => {
               <p className="text-gray-500 mt-2 max-w-sm mx-auto">Clear out your room and earn some cash by listing items for your campus peers.</p>
               <button 
                 onClick={() => navigate('/listings/new')}
-                className="mt-8 font-bold bg-blue-50 text-blue-700 hover:bg-blue-100 px-8 py-3 rounded-xl transition"
+                className="mt-8 font-bold bg-primary-50 text-primary-700 hover:bg-primary-100 px-8 py-3 rounded-xl transition"
               >
                 Post your first item
               </button>

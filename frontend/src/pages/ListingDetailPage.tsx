@@ -54,7 +54,7 @@ export const ListingDetailPage = () => {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-gray-50">
+      <div className="min-h-screen bg-[#f8f5fd]">
         <Header />
         <div className="mx-auto max-w-5xl px-4 py-8">
           <div className="flex animate-pulse flex-col gap-8 md:flex-row">
@@ -73,13 +73,13 @@ export const ListingDetailPage = () => {
   // @ts-ignore
   if (error?.response?.status === 404 || !listing) {
     return (
-      <div className="min-h-screen bg-gray-50 flex flex-col">
+      <div className="min-h-screen bg-[#f8f5fd] flex flex-col">
         <Header />
         <div className="flex-1 flex items-center justify-center p-4">
           <div className="text-center">
             <h2 className="text-2xl font-bold text-gray-800">Listing not found</h2>
             <p className="text-gray-500 mt-2 mb-6">This listing doesn't exist or has been removed.</p>
-            <Link to="/listings" className="text-blue-600 font-medium hover:underline">
+            <Link to="/listings" className="text-primary-600 font-medium hover:underline">
               ← Back to Browse
             </Link>
           </div>
@@ -89,7 +89,7 @@ export const ListingDetailPage = () => {
   }
 
   const typeColor = {
-    sell: 'bg-blue-100 text-blue-800',
+    sell: 'bg-primary-100 text-primary-800',
     lend: 'bg-purple-100 text-purple-800',
     free: 'bg-green-100 text-green-800',
   }[listing.listing_type];
@@ -102,7 +102,7 @@ export const ListingDetailPage = () => {
   }[listing.status];
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-[#f8f5fd]">
       <Header />
       
       <main className="mx-auto max-w-5xl px-4 py-8 sm:px-6 lg:px-8">
@@ -138,7 +138,7 @@ export const ListingDetailPage = () => {
                     key={url}
                     onClick={() => setSelectedIndex(idx)}
                     className={`shrink-0 overflow-hidden rounded-lg border-2 ${
-                      selectedIndex === idx ? 'border-blue-600' : 'border-transparent'
+                      selectedIndex === idx ? 'border-primary-600' : 'border-transparent'
                     }`}
                   >
                     <img 
@@ -213,7 +213,7 @@ export const ListingDetailPage = () => {
                   {listing.seller?.avatar_url ? (
                     <img src={listing.seller.avatar_url} alt="Avatar" className="h-12 w-12 rounded-full border border-gray-200" />
                   ) : (
-                    <div className="flex h-12 w-12 items-center justify-center rounded-full bg-blue-100 text-xl font-bold text-blue-700">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary-100 text-xl font-bold text-primary-700">
                       {listing.seller?.name.charAt(0)}
                     </div>
                   )}
@@ -228,18 +228,18 @@ export const ListingDetailPage = () => {
                 {!isLoggedIn ? (
                   <button
                     onClick={() => setShowSignIn(true)}
-                    className="w-full rounded-lg bg-blue-50 py-3 font-semibold text-blue-700 hover:bg-blue-100 transition"
+                    className="w-full rounded-lg bg-primary-50 py-3 font-semibold text-primary-700 hover:bg-primary-100 transition"
                   >
                     🔒 Sign in to view contact details
                   </button>
                 ) : isOwner ? (
-                  <div className="rounded-lg bg-gray-50 p-4 border border-gray-200">
+                  <div className="rounded-lg bg-[#f8f5fd] p-4 border border-gray-200">
                     <label className="block text-sm font-medium text-gray-700 mb-2">Manage Status</label>
                     <select
                       value={listing.status}
                       disabled={statusMutation.isPending || listing.status === 'sold'}
                       onChange={(e) => statusMutation.mutate(e.target.value as ListingStatus)}
-                      className="w-full rounded-lg border border-gray-300 p-2.5 text-sm font-medium bg-white focus:border-blue-500 focus:ring-1 focus:ring-blue-500 disabled:bg-gray-100 disabled:text-gray-500"
+                      className="w-full rounded-lg border border-gray-300 p-2.5 text-sm font-medium bg-white focus:border-primary-500 focus:ring-1 focus:ring-primary-500 disabled:bg-gray-100 disabled:text-gray-500"
                     >
                       <option value="active">Active</option>
                       <option value="reserved">Reserved</option>
@@ -251,20 +251,20 @@ export const ListingDetailPage = () => {
                     )}
                   </div>
                 ) : (
-                  <div className="space-y-3 rounded-lg bg-blue-50 p-4 border border-blue-100">
+                  <div className="space-y-3 rounded-lg bg-primary-50 p-4 border border-primary-100">
                     <div className="flex items-center gap-3 text-gray-800">
                       <span className="text-xl">📧</span>
-                      <a href={`mailto:${listing.seller?.email}`} className="font-medium hover:text-blue-600 hover:underline">
+                      <a href={`mailto:${listing.seller?.email}`} className="font-medium hover:text-primary-600 hover:underline">
                         {listing.seller?.email || 'Not provided'}
                       </a>
                     </div>
                     <div className="flex items-center gap-3 text-gray-800">
                       <span className="text-xl">📱</span>
-                      <a href={`tel:${listing.seller?.phone_number}`} className="font-medium hover:text-blue-600 hover:underline">
+                      <a href={`tel:${listing.seller?.phone_number}`} className="font-medium hover:text-primary-600 hover:underline">
                         {listing.seller?.phone_number || 'Not provided'}
                       </a>
                     </div>
-                    <p className="mt-3 text-xs font-medium text-blue-800 border-t border-blue-200 pt-3">
+                    <p className="mt-3 text-xs font-medium text-primary-800 border-t border-primary-200 pt-3">
                       Reach out directly to the seller. For your safety, always meet in a public place on campus.
                     </p>
                   </div>

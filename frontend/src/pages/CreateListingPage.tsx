@@ -41,7 +41,7 @@ export const CreateListingPage = () => {
   // Phone Gate
   if (!user?.phone_number) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-gray-50 p-4">
+      <div className="flex min-h-screen items-center justify-center bg-[#f8f5fd] p-4">
         <div className="w-full max-w-md rounded-xl bg-white p-8 text-center shadow-lg">
           <h2 className="mb-4 text-2xl font-bold text-gray-800">Phone Number Required</h2>
           <p className="mb-6 text-gray-600">You must set your phone number before creating a listing.</p>
@@ -118,7 +118,7 @@ export const CreateListingPage = () => {
         <h1 className="text-3xl font-bold text-gray-900">Post a Listing</h1>
         <button 
           onClick={() => navigate('/listings')}
-          className="rounded border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
+          className="rounded border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-[#f8f5fd]"
         >
           Cancel
         </button>
@@ -133,7 +133,7 @@ export const CreateListingPage = () => {
       <form onSubmit={handleSubmit} className="space-y-6 rounded-xl bg-white p-6 shadow-sm border border-gray-100">
         
         {/* Type Toggle */}
-        <div className="flex rounded-lg border border-gray-200 bg-gray-50 p-1">
+        <div className="flex rounded-lg border border-gray-200 bg-[#f8f5fd] p-1">
           {(['sell', 'lend', 'free'] as const).map((type) => (
             <button
               key={type}
@@ -141,7 +141,7 @@ export const CreateListingPage = () => {
               onClick={() => setListingType(type)}
               className={`flex-1 rounded-md py-2 text-sm font-medium capitalize transition-all ${
                 listingType === type 
-                  ? 'bg-white text-blue-600 shadow-sm' 
+                  ? 'bg-white text-primary-600 shadow-sm' 
                   : 'text-gray-500 hover:text-gray-700'
               }`}
             >
@@ -158,7 +158,7 @@ export const CreateListingPage = () => {
             maxLength={120}
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            className="w-full rounded-lg border border-gray-300 p-3 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none"
+            className="w-full rounded-lg border border-gray-300 p-3 focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none"
             placeholder="What are you listing?"
             required
           />
@@ -172,7 +172,7 @@ export const CreateListingPage = () => {
             <select
               value={categoryId}
               onChange={(e) => setCategoryId(e.target.value)}
-              className="w-full rounded-lg border border-gray-300 p-3 bg-white focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none"
+              className="w-full rounded-lg border border-gray-300 p-3 bg-white focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none"
               required
             >
               <option value="">Select a category</option>
@@ -188,7 +188,7 @@ export const CreateListingPage = () => {
             <select
               value={condition}
               onChange={(e) => setCondition(e.target.value as ListingCondition)}
-              className="w-full rounded-lg border border-gray-300 p-3 bg-white focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none"
+              className="w-full rounded-lg border border-gray-300 p-3 bg-white focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none"
             >
               <option value="">Not applicable</option>
               <option value="new">New</option>
@@ -210,7 +210,7 @@ export const CreateListingPage = () => {
               step="0.01"
               value={price}
               onChange={(e) => setPrice(e.target.value)}
-              className="w-full md:w-1/2 rounded-lg border border-gray-300 p-3 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none"
+              className="w-full md:w-1/2 rounded-lg border border-gray-300 p-3 focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none"
               placeholder={listingType === 'sell' ? 'Selling price' : 'Lending rate / deposit'}
             />
           </div>
@@ -224,7 +224,7 @@ export const CreateListingPage = () => {
             rows={5}
             value={description}
             onChange={(e) => setDescription(e.target.value)}
-            className="w-full rounded-lg border border-gray-300 p-3 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none resize-none"
+            className="w-full rounded-lg border border-gray-300 p-3 focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none resize-none"
             placeholder="Add more details about your item..."
           />
           <div className="mt-1 text-right text-xs text-gray-400">{description.length}/2000</div>
@@ -256,7 +256,7 @@ export const CreateListingPage = () => {
             ))}
             
             {images.length < 4 && (
-              <label className="flex aspect-square cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-gray-300 bg-gray-50 transition hover:bg-gray-100 hover:border-blue-400 text-gray-500">
+              <label className="flex aspect-square cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-gray-300 bg-[#f8f5fd] transition hover:bg-gray-100 hover:border-primary-400 text-gray-500">
                 <span className="text-2xl">+</span>
                 <span className="text-xs font-medium mt-1">Upload</span>
                 <input
@@ -274,7 +274,7 @@ export const CreateListingPage = () => {
         <button
           type="submit"
           disabled={isSubmitting}
-          className="w-full rounded-lg bg-blue-600 py-4 text-center font-bold text-white shadow-md transition hover:bg-blue-700 disabled:bg-blue-300"
+          className="w-full rounded-lg bg-primary-600 py-4 text-center font-bold text-white shadow-md transition hover:bg-primary-700 disabled:bg-primary-300"
         >
           {isSubmitting ? 'Posting...' : 'Post Listing'}
         </button>

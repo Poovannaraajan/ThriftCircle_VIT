@@ -10,8 +10,8 @@ export const Header = () => {
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
 
         <Link to="/" className="flex items-center gap-2">
-          <span className="text-2xl font-extrabold tracking-tight text-gray-900">
-            <span className="text-blue-600">Thrift</span>Circle
+          <span className="text-2xl font-bold tracking-tight text-[#2d1b4e]" style={{ fontFamily: "'Playfair Display', serif" }}>
+            ThriftCircle
           </span>
         </Link>
 
@@ -21,7 +21,7 @@ export const Header = () => {
             <div className="flex items-center gap-4 border-l pl-4">
               <button
                 onClick={() => navigate('/listings/new')}
-                className="hidden sm:flex items-center gap-1 rounded-lg bg-blue-600 px-4 py-2 text-sm font-bold text-white shadow-sm hover:bg-blue-700 transition"
+                className="hidden sm:flex items-center gap-1 rounded-lg bg-primary-600 px-4 py-2 text-sm font-bold text-white shadow-sm hover:bg-primary-700 transition"
               >
                 + Post Item
               </button>
@@ -36,11 +36,11 @@ export const Header = () => {
                 {user.avatar_url ? (
                   <img src={user.avatar_url} alt="Profile" className="h-8 w-8 rounded-full border border-gray-200" />
                 ) : (
-                  <div className="h-8 w-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-700 font-bold group-hover:bg-blue-200 transition">
+                  <div className="h-8 w-8 rounded-full bg-primary-100 flex items-center justify-center text-primary-700 font-bold group-hover:bg-primary-200 transition">
                     {user.name.charAt(0)}
                   </div>
                 )}
-                <span className="hidden md:block text-sm font-medium text-gray-700 group-hover:text-blue-600 transition">{user.name}</span>
+                <span className="hidden md:block text-sm font-medium text-gray-700 group-hover:text-primary-600 transition">{user.name}</span>
               </Link>
               <button
                 onClick={logout}
@@ -53,7 +53,7 @@ export const Header = () => {
             <div className="border-l pl-4">
               <button
                 onClick={() => navigate('/')}
-                className="text-sm font-semibold text-blue-600 hover:text-blue-800 transition"
+                className="text-sm font-semibold text-primary-600 hover:text-primary-800 transition"
               >
                 Log In
               </button>
@@ -63,7 +63,7 @@ export const Header = () => {
           {/* Mobile post button */}
           <button
             onClick={() => navigate('/listings/new')}
-            className="sm:hidden flex h-8 w-8 items-center justify-center rounded-full bg-blue-600 text-white shadow-sm hover:bg-blue-700 transition"
+            className="sm:hidden flex h-8 w-8 items-center justify-center rounded-full bg-primary-600 text-white shadow-sm hover:bg-primary-700 transition"
           >
             +
           </button>

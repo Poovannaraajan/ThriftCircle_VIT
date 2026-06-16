@@ -37,7 +37,7 @@ export const SignInOverlay = ({ isOpen, onClose }: SignInOverlayProps) => {
         </button>
 
         <div className="p-8 text-center">
-          <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-blue-100">
+          <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-primary-100">
             <span className="text-3xl">🔒</span>
           </div>
           
@@ -60,7 +60,7 @@ export const SignInOverlay = ({ isOpen, onClose }: SignInOverlayProps) => {
           </div>
         </div>
         
-        <div className="bg-gray-50 px-8 py-4 text-center text-xs text-gray-500">
+        <div className="bg-[#f8f5fd] px-8 py-4 text-center text-xs text-gray-500">
           We protect buyer and seller privacy. Only vitstudent.ac.in domains are permitted.
         </div>
       </div>

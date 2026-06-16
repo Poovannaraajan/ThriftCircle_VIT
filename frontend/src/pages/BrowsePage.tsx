@@ -80,7 +80,7 @@ export const BrowsePage = () => {
   const skeletons = Array(8).fill(0);
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col">
+    <div className="min-h-screen bg-[#f8f5fd] flex flex-col">
       <Header />
       
       <main className="mx-auto w-full max-w-7xl flex-1 px-4 py-8 sm:px-6 lg:px-8">
@@ -126,7 +126,7 @@ export const BrowsePage = () => {
                   <p className="text-gray-500 mt-2">Try adjusting your filters or search query.</p>
                   <button 
                     onClick={handleReset}
-                    className="mt-4 text-blue-600 font-medium hover:underline"
+                    className="mt-4 text-primary-600 font-medium hover:underline"
                   >
                     Clear all filters
                   </button>
