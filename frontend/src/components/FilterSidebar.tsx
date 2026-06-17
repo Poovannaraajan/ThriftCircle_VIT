@@ -99,7 +99,7 @@ export const FilterSidebar = ({ categories, filters, onChange, onReset }: Filter
             onClick={() => onChange({ category_id: null, page: 1 })}
             className={`flex w-full items-center rounded-lg px-3 py-2 text-sm transition ${
               filters.category_id == null 
-                ? 'bg-primary-50 text-primary-700 font-bold' 
+                ? 'bg-primary-600 text-white font-bold' 
                 : 'text-gray-600 hover:bg-gray-100'
             }`}
           >
@@ -111,7 +111,7 @@ export const FilterSidebar = ({ categories, filters, onChange, onReset }: Filter
               onClick={() => onChange({ category_id: c.id, page: 1 })}
               className={`flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm transition ${
                 filters.category_id === c.id 
-                  ? 'bg-primary-50 text-primary-700 font-bold' 
+                  ? 'bg-primary-600 text-white font-bold' 
                   : 'text-gray-600 hover:bg-gray-100'
               }`}
             >

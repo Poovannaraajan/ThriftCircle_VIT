@@ -13,6 +13,7 @@ class Listing(db.Model):
     description = db.Column(db.Text, nullable=True)
     price = db.Column(db.Numeric(10, 2), nullable=True)
     listing_type = db.Column(db.String(10), nullable=False, default="sell")
+    rental_period = db.Column(db.String(20), nullable=True)
     condition = db.Column(db.String(20), nullable=True)
     status = db.Column(db.String(20), nullable=False, default="active")
     image_urls = db.Column(db.Text, nullable=True)
@@ -21,7 +22,7 @@ class Listing(db.Model):
 
     category = db.relationship("Category", back_populates="listings")
     seller = db.relationship("User", back_populates="listings")
-    wishlists = db.relationship("Wishlist", back_populates="listing", lazy="dynamic")
+    wishlists = db.relationship("Wishlist", back_populates="listing", lazy="dynamic", cascade="all, delete-orphan")
 
     __table_args__ = (
         Index(
@@ -46,6 +47,7 @@ class Listing(db.Model):
             "description": self.description,
             "price": float(self.price) if self.price is not None else None,
             "listing_type": self.listing_type,
+            "rental_period": self.rental_period,
             "condition": self.condition,
             "status": self.status,
             "image_urls": self.image_url_list,

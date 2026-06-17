@@ -5,6 +5,7 @@ class CreateListingSchema(Schema):
     description = fields.String(load_default=None, validate=validate.Length(max=2000))
     price = fields.Decimal(places=2, load_default=None, allow_none=True, validate=validate.Range(min=0))
     listing_type = fields.String(required=True, validate=validate.OneOf(["sell", "lend", "free"]))
+    rental_period = fields.String(load_default=None, allow_none=True, validate=validate.OneOf(["day", "week", "month"]))
     condition = fields.String(load_default=None, allow_none=True, validate=validate.OneOf(["new", "like_new", "good", "fair", "poor"]))
     category_id = fields.Integer(required=True)
 

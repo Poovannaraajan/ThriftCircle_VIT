@@ -19,7 +19,10 @@ export const EditListingPage = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');
   
-  const [listingType, setListingType] = useState<ListingType>('sell');
+  const [formData, setFormData] = useState<Partial<CreateListingPayload>>({
+    listing_type: 'sell',
+    rental_period: null,
+  });
   const [title, setTitle] = useState('');
   const [categoryId, setCategoryId] = useState('');
   const [price, setPrice] = useState('');
@@ -44,9 +47,18 @@ export const EditListingPage = () => {
           return;
         }
 
+        setFormData({
+          title: listing.title,
+          description: listing.description || '',
+          price: listing.price,
+          listing_type: listing.listing_type,
+          rental_period: listing.rental_period || null,
+          condition: listing.condition,
+          category_id: listing.category?.id,
+        });
         setTitle(listing.title);
         setDescription(listing.description || '');
-        setListingType(listing.listing_type);
+
         setCategoryId(listing.category_id.toString());
         setCondition(listing.condition || '');
         setPrice(listing.price ? listing.price.toString() : '');
@@ -96,8 +108,9 @@ export const EditListingPage = () => {
       const payload = {
         title: trimmedTitle,
         description: trimmedDesc || undefined,
-        price: listingType === 'free' ? null : (price ? parseFloat(price) : null),
-        listing_type: listingType,
+        price: formData.listing_type === 'free' ? null : (price ? parseFloat(price) : null),
+        listing_type: formData.listing_type,
+        rental_period: formData.listing_type === 'lend' ? formData.rental_period : null,
         condition: condition || null,
         category_id: parseInt(categoryId, 10)
       };
@@ -148,9 +161,9 @@ export const EditListingPage = () => {
             <button
               key={type}
               type="button"
-              onClick={() => setListingType(type)}
+              onClick={() => setFormData(prev => ({ ...prev, listing_type: type, rental_period: type === 'lend' ? 'day' : null }))}
               className={`flex-1 rounded-md py-2 text-sm font-medium capitalize transition-all ${
-                listingType === type 
+                formData.listing_type === type 
                   ? 'bg-white text-primary-600 shadow-sm' 
                   : 'text-gray-500 hover:text-gray-700'
               }`}
@@ -172,6 +185,7 @@ export const EditListingPage = () => {
             placeholder="What are you listing?"
             required
           />
+
           <div className="mt-1 text-right text-xs text-gray-400">{title.length}/120</div>
         </div>
 
@@ -211,18 +225,35 @@ export const EditListingPage = () => {
         </div>
 
         {/* Price (Hidden if Free) */}
-        {listingType !== 'free' && (
-          <div>
-            <label className="mb-1 block text-sm font-medium text-gray-700">Price (₹)</label>
-            <input
-              type="number"
-              min="0"
-              step="0.01"
-              value={price}
-              onChange={(e) => setPrice(e.target.value)}
-              className="w-full md:w-1/2 rounded-lg border border-gray-300 p-3 focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none"
-              placeholder={listingType === 'sell' ? 'Selling price' : 'Lending rate / deposit'}
-            />
+        {formData.listing_type !== 'free' && (
+          <div className="grid gap-6 md:grid-cols-2">
+            <div>
+              <label className="mb-1 block text-sm font-medium text-gray-700">Price (₹)</label>
+              <input
+                type="number"
+                min="0"
+                step="0.01"
+                value={price}
+                onChange={(e) => setPrice(e.target.value)}
+                className="w-full rounded-lg border border-gray-300 p-3 focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none"
+                placeholder={formData.listing_type === 'sell' ? 'Selling price' : 'Lending rate'}
+              />
+            </div>
+            {formData.listing_type === 'lend' && (
+              <div>
+                <label className="mb-1 block text-sm font-medium text-gray-700">Rental Period</label>
+                <select
+                  required
+                  value={formData.rental_period || 'day'}
+                  onChange={e => setFormData(prev => ({ ...prev, rental_period: e.target.value as 'day' | 'week' | 'month' }))}
+                  className="w-full rounded-lg border border-gray-300 p-3 bg-white focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none"
+                >
+                  <option value="day">Per Day</option>
+                  <option value="week">Per Week</option>
+                  <option value="month">Per Month</option>
+                </select>
+              </div>
+            )}
           </div>
         )}
 

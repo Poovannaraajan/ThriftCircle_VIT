@@ -1,9 +1,12 @@
 import { Link, useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 import { useAuth } from '../hooks/useAuth';
+import { SignInOverlay } from './SignInOverlay';
 
 export const Header = () => {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
+  const [showSignIn, setShowSignIn] = useState(false);
 
   return (
     <header className="sticky top-0 z-40 w-full border-b bg-white shadow-sm">
@@ -50,9 +53,15 @@ export const Header = () => {
               </button>
             </div>
           ) : (
-            <div className="border-l pl-4">
+            <div className="flex items-center gap-4 border-l pl-4">
               <button
-                onClick={() => navigate('/')}
+                onClick={() => setShowSignIn(true)}
+                className="hidden sm:flex items-center gap-1 rounded-lg bg-primary-600 px-4 py-2 text-sm font-bold text-white shadow-sm hover:bg-primary-700 transition"
+              >
+                + Post Item
+              </button>
+              <button
+                onClick={() => setShowSignIn(true)}
                 className="text-sm font-semibold text-primary-600 hover:text-primary-800 transition"
               >
                 Log In
@@ -62,13 +71,15 @@ export const Header = () => {
 
           {/* Mobile post button */}
           <button
-            onClick={() => navigate('/listings/new')}
+            onClick={() => user ? navigate('/listings/new') : setShowSignIn(true)}
             className="sm:hidden flex h-8 w-8 items-center justify-center rounded-full bg-primary-600 text-white shadow-sm hover:bg-primary-700 transition"
           >
             +
           </button>
         </div>
       </div>
+      
+      <SignInOverlay isOpen={showSignIn} onClose={() => setShowSignIn(false)} />
     </header>
   );
 };

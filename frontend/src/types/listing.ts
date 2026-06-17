@@ -24,6 +24,7 @@ export interface Listing {
   description: string | null;
   price: number | null;
   listing_type: ListingType;
+  rental_period?: 'day' | 'week' | 'month' | null;
   condition: ListingCondition | null;
   status: ListingStatus;
   image_urls: string[];
@@ -60,6 +61,7 @@ export interface CreateListingPayload {
   description?: string;
   price?: number | null;
   listing_type: ListingType;
+  rental_period?: 'day' | 'week' | 'month' | null;
   condition?: ListingCondition | null;
   category_id: number;
 }

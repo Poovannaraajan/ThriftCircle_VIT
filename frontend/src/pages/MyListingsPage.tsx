@@ -84,7 +84,7 @@ const ListingRow = ({ listing }: { listing: Listing }) => {
                 ? 'FREE' 
                 : listing.price === null 
                   ? 'Price on request' 
-                  : `₹${listing.price.toLocaleString('en-IN')}`}
+                  : `₹${listing.price.toLocaleString('en-IN')}${listing.listing_type === 'lend' && listing.rental_period ? ` / ${listing.rental_period}` : ''}`}
           </span>
           <span className="text-gray-300">•</span>
           <span className="flex items-center gap-1">
@@ -154,7 +154,7 @@ const ListingRow = ({ listing }: { listing: Listing }) => {
           </Link>
           <Link 
             to={`/listings/${listing.id}/edit`}
-            className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary-50 text-primary-600 hover:bg-primary-100 transition"
+            className={`flex h-10 w-10 items-center justify-center rounded-lg bg-primary-50 text-primary-600 hover:bg-primary-100 transition ${isSold ? 'pointer-events-none opacity-50' : ''}`}
             title="Edit"
           >
             ✏️
@@ -165,8 +165,8 @@ const ListingRow = ({ listing }: { listing: Listing }) => {
                 deleteMutation.mutate();
               }
             }}
-            disabled={deleteMutation.isPending}
-            className="flex h-10 w-10 items-center justify-center rounded-lg bg-red-50 text-red-600 hover:bg-red-100 transition disabled:opacity-50"
+            disabled={deleteMutation.isPending || isSold}
+            className="flex h-10 w-10 items-center justify-center rounded-lg bg-red-50 text-red-600 hover:bg-red-100 transition disabled:opacity-50 disabled:cursor-not-allowed"
             title="Delete"
           >
             {deleteMutation.isPending ? "..." : "🗑️"}

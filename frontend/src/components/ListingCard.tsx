@@ -76,7 +76,7 @@ export const ListingCard = ({ listing }: ListingCardProps) => {
                 ? 'FREE' 
                 : listing.price === null 
                   ? 'Price on request' 
-                  : `₹${listing.price.toLocaleString('en-IN')}`
+                  : `₹${listing.price.toLocaleString('en-IN')}${listing.listing_type === 'lend' && listing.rental_period ? ` / ${listing.rental_period}` : ''}`
               }
             </span>
           </div>

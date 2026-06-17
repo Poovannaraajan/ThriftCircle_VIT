@@ -127,6 +127,7 @@ def create_listing():
         description=validated_data.get("description"),
         price=validated_data.get("price"),
         listing_type=validated_data["listing_type"],
+        rental_period=validated_data.get("rental_period"),
         condition=validated_data.get("condition"),
         image_urls=image_urls
     )
@@ -223,6 +224,7 @@ def update_listing(listing_id):
     listing.description = validated_data.get("description")
     listing.price = validated_data.get("price")
     listing.listing_type = validated_data["listing_type"]
+    listing.rental_period = validated_data.get("rental_period")
     listing.condition = validated_data.get("condition")
     listing.category_id = validated_data["category_id"]
     

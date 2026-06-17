@@ -38,6 +38,7 @@ export const createListing = async (payload: CreateListingPayload, images: File[
   if (payload.description) formData.append('description', payload.description);
   if (payload.price !== undefined && payload.price !== null) formData.append('price', String(payload.price));
   if (payload.condition) formData.append('condition', payload.condition);
+  if (payload.rental_period) formData.append('rental_period', payload.rental_period);
   
   images.forEach(img => formData.append('images', img));
   
