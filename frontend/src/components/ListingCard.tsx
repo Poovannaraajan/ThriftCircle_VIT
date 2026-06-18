@@ -15,8 +15,8 @@ export const ListingCard = ({ listing }: ListingCardProps) => {
   const navigate = useNavigate();
   const [showSignIn, setShowSignIn] = useState(false);
 
-  const mainImage = listing.image_urls.length > 0 
-    ? getImageUrl(listing.image_urls[0]) 
+  const mainImage = listing.image_urls.length > 0
+    ? getImageUrl(listing.image_urls[0])
     : null;
 
   const typeColor = {
@@ -34,15 +34,15 @@ export const ListingCard = ({ listing }: ListingCardProps) => {
 
   return (
     <>
-      <div 
+      <div
         onClick={() => navigate(`/listings/${listing.id}`)}
         className="group flex flex-col overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm transition-all hover:-translate-y-1 hover:shadow-md cursor-pointer"
       >
         <div className="relative aspect-[4/3] w-full overflow-hidden bg-gray-100">
           {mainImage ? (
-            <img 
-              src={mainImage} 
-              alt={listing.title} 
+            <img
+              src={mainImage}
+              alt={listing.title}
               className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
             />
           ) : (
@@ -53,9 +53,9 @@ export const ListingCard = ({ listing }: ListingCardProps) => {
           <span className={`absolute left-2 top-2 rounded px-2 py-1 text-xs font-bold uppercase tracking-wider ${typeColor}`}>
             {listing.listing_type}
           </span>
-          
+
           {/* Wishlist Button Overlay */}
-          <div 
+          <div
             className="absolute right-3 top-3 z-10"
             onClick={(e) => {
               e.preventDefault();
@@ -72,10 +72,10 @@ export const ListingCard = ({ listing }: ListingCardProps) => {
               {listing.title}
             </h3>
             <span className="shrink-0 text-base font-bold text-gray-900">
-              {listing.listing_type === 'free' 
-                ? 'FREE' 
-                : listing.price === null 
-                  ? 'Price on request' 
+              {listing.listing_type === 'free'
+                ? 'FREE'
+                : listing.price === null
+                  ? 'Price on request'
                   : `₹${listing.price.toLocaleString('en-IN')}${listing.listing_type === 'lend' && listing.rental_period ? ` / ${listing.rental_period}` : ''}`
               }
             </span>
@@ -97,10 +97,16 @@ export const ListingCard = ({ listing }: ListingCardProps) => {
             </div>
 
             {user ? (
-              <div className="rounded bg-[#f8f5fd] p-2 text-xs">
-                <div className="truncate text-gray-700">📧 {listing.seller?.email || 'N/A'}</div>
-                <div className="text-gray-700">📱 {listing.seller?.phone_number || 'N/A'}</div>
-              </div>
+              listing.seller?.email ? (
+                <div className="rounded bg-[#f8f5fd] p-2 text-xs">
+                  <div className="truncate text-gray-700">📧 {listing.seller.email}</div>
+                  <div className="text-gray-700">📱 {listing.seller.phone_number}</div>
+                </div>
+              ) : (
+                <div className="w-full rounded bg-gray-50 py-1.5 text-center text-xs font-medium text-gray-500">
+                  Click to view details
+                </div>
+              )
             ) : (
               <button
                 type="button"

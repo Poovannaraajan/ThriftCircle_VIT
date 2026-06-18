@@ -52,8 +52,7 @@ export const createListing = async (payload: CreateListingPayload, images: File[
 };
 
 export const getImageUrl = (path: string): string => {
-  const baseUrl = import.meta.env.VITE_API_URL;
-  return `${baseUrl}/api/listings/uploads/${path.split('/').pop()}`;
+  return path;
 };
 
 export const updateListingStatus = async (id: string, status: string): Promise<Listing> => {

@@ -244,18 +244,33 @@ def delete_listing(listing_id):
     if listing.seller_id != current_user_id:
         return jsonify({"error": "You can only delete your own listings"}), 403
         
-    # Optional: Delete images from disk
+    # Delete images from Cloudinary
     if listing.image_urls:
         urls = listing.image_urls.split(",")
-        uploads_dir = os.path.abspath(os.path.join(current_app.root_path, '..', 'uploads'))
         for url in urls:
-            filename = url.split("/")[-1]
-            filepath = os.path.join(uploads_dir, filename)
-            if os.path.exists(filepath):
+            if "cloudinary.com" in url:
                 try:
-                    os.remove(filepath)
+                    import cloudinary.uploader
+                    parts = url.split('/')
+                    upload_idx = parts.index('upload')
+                    # The public ID is everything after the version number (upload/vXXXX/...) without the extension
+                    path_parts = parts[upload_idx+2:]
+                    public_id_with_ext = "/".join(path_parts)
+                    public_id = public_id_with_ext.rsplit('.', 1)[0]
+                    
+                    cloudinary.uploader.destroy(public_id)
                 except Exception as e:
-                    print(f"Failed to delete image {filepath}: {e}")
+                    print(f"Failed to delete image from Cloudinary {url}: {e}")
+            else:
+                # Fallback for old local images during development
+                uploads_dir = os.path.abspath(os.path.join(current_app.root_path, '..', 'uploads'))
+                filename = url.split("/")[-1]
+                filepath = os.path.join(uploads_dir, filename)
+                if os.path.exists(filepath):
+                    try:
+                        os.remove(filepath)
+                    except Exception as e:
+                        pass
 
     db.session.delete(listing)
     db.session.commit()
