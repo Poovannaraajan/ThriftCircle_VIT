@@ -14,7 +14,6 @@ env.bak/
 venv.bak/
 Back-end/venv/
 Back-end/.venv/
-
 # Django/Flask/FastAPI specific (if any)
 instance/
 .webassets-cache
@@ -94,3 +93,5 @@ backend/**/__pycache__/
 frontend/.env
 frontend/node_modules/
 frontend/dist/
+backend/.env.production
+frontend/.env.production
