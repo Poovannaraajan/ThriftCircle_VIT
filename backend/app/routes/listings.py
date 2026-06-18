@@ -174,7 +174,7 @@ def get_listings():
     paginated = query.paginate(page=page, per_page=per_page, error_out=False)
     
     current_user_id = get_jwt_identity()
-    include_contact = current_user_id is not None
+    include_contact = False # Enforced security rule: never expose contact in feed
     
     listings = [l.to_dict(include_seller=True, include_contact=include_contact) for l in paginated.items]
     
