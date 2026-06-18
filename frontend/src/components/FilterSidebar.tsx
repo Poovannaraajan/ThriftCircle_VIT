@@ -54,7 +54,7 @@ export const FilterSidebar = ({ categories, filters, onChange, onReset }: Filter
               key={t.label}
               onClick={() => onChange({ listing_type: t.value, page: 1 })}
               className={`rounded-full px-4 py-1.5 text-sm font-medium transition ${
-                filters.listing_type === t.value 
+                (filters.listing_type || null) === t.value 
                   ? 'bg-gray-900 text-white' 
                   : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
               }`}

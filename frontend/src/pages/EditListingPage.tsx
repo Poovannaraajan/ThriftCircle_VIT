@@ -97,8 +97,13 @@ export const EditListingPage = () => {
     const trimmedTitle = title.trim();
     const trimmedDesc = description.trim();
 
-    if (!trimmedTitle || !categoryId) {
-      setError('Title and Category are required');
+    if (!trimmedTitle || !categoryId || !condition || !trimmedDesc) {
+      setError('All fields (Title, Category, Condition, Description) are required.');
+      return;
+    }
+
+    if (formData.listing_type !== 'free' && !price) {
+      setError('Price is required.');
       return;
     }
 
@@ -208,13 +213,14 @@ export const EditListingPage = () => {
 
           {/* Condition */}
           <div>
-            <label className="mb-1 block text-sm font-medium text-gray-700">Condition</label>
+            <label className="mb-1 block text-sm font-medium text-gray-700">Condition *</label>
             <select
               value={condition}
               onChange={(e) => setCondition(e.target.value as ListingCondition)}
               className="w-full rounded-lg border border-gray-300 p-3 bg-white focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none"
+              required
             >
-              <option value="">Not applicable</option>
+              <option value="" disabled>Select condition</option>
               <option value="new">New</option>
               <option value="like_new">Like New</option>
               <option value="good">Good</option>
@@ -228,7 +234,7 @@ export const EditListingPage = () => {
         {formData.listing_type !== 'free' && (
           <div className="grid gap-6 md:grid-cols-2">
             <div>
-              <label className="mb-1 block text-sm font-medium text-gray-700">Price (₹)</label>
+              <label className="mb-1 block text-sm font-medium text-gray-700">Price (₹) *</label>
               <input
                 type="number"
                 min="0"
@@ -241,7 +247,7 @@ export const EditListingPage = () => {
             </div>
             {formData.listing_type === 'lend' && (
               <div>
-                <label className="mb-1 block text-sm font-medium text-gray-700">Rental Period</label>
+                <label className="mb-1 block text-sm font-medium text-gray-700">Rental Period *</label>
                 <select
                   required
                   value={formData.rental_period || 'day'}
@@ -259,8 +265,9 @@ export const EditListingPage = () => {
 
         {/* Description */}
         <div>
-          <label className="mb-1 block text-sm font-medium text-gray-700">Description</label>
+          <label className="mb-1 block text-sm font-medium text-gray-700">Description *</label>
           <textarea
+            required
             maxLength={2000}
             rows={5}
             value={description}

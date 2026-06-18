@@ -57,9 +57,9 @@ const ListingRow = ({ listing }: { listing: Listing }) => {
   const mainImage = listing.image_urls.length > 0 ? getImageUrl(listing.image_urls[0]) : null;
 
   return (
-    <div className={`flex flex-col sm:flex-row items-start sm:items-center gap-4 p-4 border-b border-gray-100 last:border-0 bg-white transition-all ${isSold ? 'opacity-60 grayscale-[50%]' : ''}`}>
+    <div className={`flex flex-col sm:flex-row items-start sm:items-center gap-4 p-4 border-b border-gray-100 last:border-0 bg-white transition-all`}>
       {/* Cover Image */}
-      <div className="h-20 w-20 shrink-0 overflow-hidden rounded-lg bg-gray-100 flex items-center justify-center border border-gray-200">
+      <div className={`h-20 w-20 shrink-0 overflow-hidden rounded-lg bg-gray-100 flex items-center justify-center border border-gray-200 ${isSold ? 'opacity-60 grayscale-[50%]' : ''}`}>
         {mainImage ? (
           <img src={mainImage} alt={listing.title} className="h-full w-full object-cover" />
         ) : (
@@ -68,7 +68,7 @@ const ListingRow = ({ listing }: { listing: Listing }) => {
       </div>
 
       {/* Details */}
-      <div className="flex-1 min-w-0">
+      <div className={`flex-1 min-w-0 ${isSold ? 'opacity-60 grayscale-[50%]' : ''}`}>
         <div className="flex items-center gap-2 mb-1">
           <h3 className={`truncate font-bold text-lg ${isSold ? 'text-gray-500' : 'text-gray-900'}`}>
             {listing.title}
