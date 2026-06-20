@@ -5,7 +5,7 @@ import { useAuth } from '../hooks/useAuth';
 import { fetchCategories, createListing } from '../api/listings';
 import { parseApiError } from '../utils/errors';
 import { useToast } from '../contexts/ToastContext';
-import type { Category, ListingType, ListingCondition } from '../types/listing';
+import type { Category, ListingType, ListingCondition, CreateListingPayload } from '../types/listing';
 
 export const CreateListingPage = () => {
   const navigate = useNavigate();
@@ -114,7 +114,7 @@ export const CreateListingPage = () => {
         category_id: parseInt(categoryId, 10)
       };
 
-      const listing = await createListing(payload, images);
+      await createListing(payload, images);
       showToast("Listing created successfully!", "success");
       navigate(`/listings`);
     } catch (err: unknown) {
@@ -152,7 +152,7 @@ export const CreateListingPage = () => {
             <button
               key={type}
               type="button"
-              onClick={() => setFormData(prev => ({ 
+              onClick={() => setFormData((prev: Partial<CreateListingPayload>) => ({ 
                 ...prev, 
                 listing_type: type, 
                 rental_period: type === 'lend' ? 'day' : null 
@@ -240,7 +240,7 @@ export const CreateListingPage = () => {
                 <select
                   required
                   value={formData.rental_period || 'day'}
-                  onChange={e => setFormData(prev => ({ ...prev, rental_period: e.target.value as 'day' | 'week' | 'month' }))}
+                  onChange={e => setFormData((prev: Partial<CreateListingPayload>) => ({ ...prev, rental_period: e.target.value as 'day' | 'week' | 'month' }))}
                   className="w-full rounded-lg border border-gray-300 p-3 bg-white focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none"
                 >
                   <option value="day">Per Day</option>

@@ -2,13 +2,11 @@ import { useState } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { Header } from '../components/Header';
-import { fetchListing, getImageUrl, updateListingStatus, deleteListing } from '../api/listings';
+import { fetchListing, getImageUrl, updateListingStatus } from '../api/listings';
 import { parseApiError } from '../utils/errors';
 import type { ListingStatus } from '../types/listing';
 import { useAuth } from '../hooks/useAuth';
 import { SignInOverlay } from '../components/SignInOverlay';
-import { useToast } from '../contexts/ToastContext';
-import { PhoneNumberModal } from '../components/PhoneNumberModal';
 import { WishlistButton } from '../components/WishlistButton';
 
 function timeAgo(dateStr: string): string {

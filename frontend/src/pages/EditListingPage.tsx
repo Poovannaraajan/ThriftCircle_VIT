@@ -5,7 +5,7 @@ import { useAuth } from '../hooks/useAuth';
 import { fetchCategories, updateListingDetails } from '../api/listings';
 import { parseApiError } from '../utils/errors';
 import { useToast } from '../contexts/ToastContext';
-import type { Category, ListingType, ListingCondition } from '../types/listing';
+import type { Category, ListingCondition, CreateListingPayload } from '../types/listing';
 import api from '../api/axios';
 
 export const EditListingPage = () => {
@@ -166,7 +166,7 @@ export const EditListingPage = () => {
             <button
               key={type}
               type="button"
-              onClick={() => setFormData(prev => ({ ...prev, listing_type: type, rental_period: type === 'lend' ? 'day' : null }))}
+              onClick={() => setFormData((prev: Partial<CreateListingPayload>) => ({ ...prev, listing_type: type, rental_period: type === 'lend' ? 'day' : null }))}
               className={`flex-1 rounded-md py-2 text-sm font-medium capitalize transition-all ${
                 formData.listing_type === type 
                   ? 'bg-white text-primary-600 shadow-sm' 
@@ -251,7 +251,7 @@ export const EditListingPage = () => {
                 <select
                   required
                   value={formData.rental_period || 'day'}
-                  onChange={e => setFormData(prev => ({ ...prev, rental_period: e.target.value as 'day' | 'week' | 'month' }))}
+                  onChange={e => setFormData((prev: Partial<CreateListingPayload>) => ({ ...prev, rental_period: e.target.value as 'day' | 'week' | 'month' }))}
                   className="w-full rounded-lg border border-gray-300 p-3 bg-white focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none"
                 >
                   <option value="day">Per Day</option>

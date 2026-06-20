@@ -8,7 +8,6 @@ import { fetchCategories, fetchListings } from '../api/listings';
 import type { ListingFilters, ListingType } from '../types/listing';
 
 export const BrowsePage = () => {
-  const [searchParams, setSearchParams] = useState<URLSearchParams | null>(null);
   
   // Custom hook to handle React Router's search params only on mount and when changed
   const [routerParams, setRouterParams] = useSearchParams();
@@ -57,7 +56,7 @@ export const BrowsePage = () => {
     staleTime: Infinity,
   });
 
-  const { data, isLoading, isPreviousData } = useQuery({
+  const { data, isLoading, isPlaceholderData } = useQuery({
     queryKey: ['listings', filters],
     queryFn: () => fetchListings(filters),
     placeholderData: (prev) => prev,
@@ -70,11 +69,6 @@ export const BrowsePage = () => {
   const handleReset = () => {
     setFilters({ page: 1, per_page: 20, status: 'active' });
     setSearchInput('');
-  };
-
-  const handleSearchSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    handleFilterChange({ q: searchInput.trim() || null, page: 1 });
   };
 
   const skeletons = Array(8).fill(0);
@@ -107,7 +101,7 @@ export const BrowsePage = () => {
               )}
             </div>
 
-            <div className={`grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4 ${isPreviousData ? 'opacity-50' : ''}`}>
+            <div className={`grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4 ${isPlaceholderData ? 'opacity-50' : ''}`}>
               {isLoading ? (
                 skeletons.map((_, i) => (
                   <div key={i} className="flex flex-col overflow-hidden rounded-xl border border-gray-100 bg-white shadow-sm">
