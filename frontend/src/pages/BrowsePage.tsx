@@ -17,8 +17,6 @@ export const BrowsePage = () => {
     per_page: 20,
     status: 'active',
   });
-  
-  const [searchInput, setSearchInput] = useState('');
 
   // Initialize from URL on mount
   useEffect(() => {
@@ -31,7 +29,6 @@ export const BrowsePage = () => {
     if (routerParams.has('max_price')) initialFilters.max_price = parseFloat(routerParams.get('max_price')!);
     if (routerParams.has('q')) {
       initialFilters.q = routerParams.get('q');
-      setSearchInput(initialFilters.q || '');
     }
     
     setFilters(prev => ({ ...prev, ...initialFilters }));
@@ -68,7 +65,6 @@ export const BrowsePage = () => {
 
   const handleReset = () => {
     setFilters({ page: 1, per_page: 20, status: 'active' });
-    setSearchInput('');
   };
 
   const skeletons = Array(8).fill(0);
