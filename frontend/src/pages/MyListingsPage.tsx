@@ -61,7 +61,7 @@ const ListingRow = ({ listing }: { listing: Listing }) => {
       {/* Cover Image */}
       <div className={`h-20 w-20 shrink-0 overflow-hidden rounded-lg bg-gray-100 flex items-center justify-center border border-gray-200 ${isSold ? 'opacity-60 grayscale-[50%]' : ''}`}>
         {mainImage ? (
-          <img src={mainImage} alt={listing.title} className="h-full w-full object-cover" />
+          <img src={mainImage} alt={listing.title} className="h-full w-full object-contain" />
         ) : (
           <span className="text-3xl opacity-40">{listing.category?.icon || '📦'}</span>
         )}

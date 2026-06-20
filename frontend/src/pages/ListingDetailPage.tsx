@@ -122,7 +122,7 @@ export const ListingDetailPage = () => {
                 <img 
                   src={getImageUrl(listing.image_urls[selectedIndex])} 
                   alt={listing.title} 
-                  className="h-full w-full object-cover"
+                  className="h-full w-full object-contain"
                 />
               ) : (
                 <div className="flex h-full w-full items-center justify-center text-8xl opacity-50">
@@ -144,7 +144,7 @@ export const ListingDetailPage = () => {
                     <img 
                       src={getImageUrl(url)} 
                       alt={`Thumbnail ${idx}`} 
-                      className="h-16 w-16 object-cover sm:h-20 sm:w-20"
+                      className="h-16 w-16 object-contain sm:h-20 sm:w-20"
                     />
                   </button>
                 ))}
