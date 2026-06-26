@@ -20,35 +20,35 @@ export const LandingPage = () => {
   };
 
   return (
-    <div className="relative min-h-screen w-full overflow-hidden bg-[#f8f5fd] font-sans">
+    <div className="relative h-screen w-full overflow-hidden bg-[#f8f5fd] font-sans">
       {/* Abstract Background Elements */}
       <div 
-        className="absolute bottom-0 right-0 h-full w-[60%] bg-[#3a205d] opacity-90" 
-        style={{ clipPath: 'polygon(100% 40%, 100% 100%, 0 100%)' }}
+        className="absolute -bottom-[20%] -right-[10%] h-[80vw] w-[80vw] max-h-[1000px] max-w-[1000px] rounded-full opacity-80 blur-[100px]" 
+        style={{ background: 'radial-gradient(circle at bottom right, #3a205d 0%, #7540a9 50%, transparent 80%)' }}
       ></div>
       <div className="absolute -left-[20%] top-0 h-[600px] w-[600px] rounded-full bg-[#f0e6fa] blur-3xl"></div>
       
       {/* Light grid pattern overlay for texture */}
       <div className="pointer-events-none absolute inset-0 opacity-10" style={{ backgroundImage: 'radial-gradient(#4a2b75 1px, transparent 1px)', backgroundSize: '40px 40px' }}></div>
 
-      <div className="relative mx-auto flex min-h-screen max-w-[1400px] flex-col items-center justify-center px-6 pb-32 pt-12 lg:flex-row lg:justify-between lg:px-16 xl:px-24">
+      <div className="relative mx-auto flex h-full max-w-[1400px] flex-col items-center justify-center px-6 pb-24 pt-8 lg:flex-row lg:justify-between lg:px-16 xl:px-24">
         
         {/* Left Column: Typography & Actions */}
         <div className="z-10 flex w-full flex-col justify-center lg:w-[45%]">
-          <h1 className="mb-4 text-7xl font-bold tracking-tight text-[#2d1b4e] sm:text-8xl" style={{ fontFamily: "'Playfair Display', serif" }}>
+          <h1 className="mb-4 text-5xl font-bold tracking-tight text-[#2d1b4e] sm:text-7xl lg:text-8xl opacity-0 animate-fade-in-up" style={{ fontFamily: "'Playfair Display', serif" }}>
             ThriftCircle
           </h1>
-          <h2 className="mb-6 text-[2.5rem] font-extrabold leading-tight text-[#1a1025] sm:text-5xl lg:text-[3.2rem]">
+          <h2 className="mb-6 text-3xl font-extrabold leading-tight text-[#1a1025] sm:text-4xl lg:text-[3.2rem] opacity-0 animate-fade-in-up" style={{ animationDelay: '150ms' }}>
             Buy, sell and lend within VIT campus
           </h2>
-          <p className="mb-10 max-w-md text-lg font-medium text-gray-600 sm:text-xl">
+          <p className="mb-10 max-w-md text-lg font-medium text-gray-600 sm:text-xl opacity-0 animate-fade-in-up" style={{ animationDelay: '300ms' }}>
             Connect with fellow students, save money, and reduce waste with easy campus exchanges.
           </p>
 
-          <div className="w-full max-w-md">
+          <div className="w-full max-w-md opacity-0 animate-fade-in-up" style={{ animationDelay: '450ms' }}>
             {user ? (
               <div className="flex flex-col gap-4">
-                <div className="flex items-center gap-4 rounded-full bg-white/80 px-6 py-4 shadow-sm backdrop-blur-md">
+                <div className="flex items-center gap-4 rounded-3xl bg-white/30 px-6 py-4 shadow-[0_8px_32px_rgba(58,32,93,0.15)] backdrop-blur-xl border border-white/50">
                   {user.avatar_url && (
                     <img src={user.avatar_url} alt="Avatar" className="h-12 w-12 rounded-full border-2 border-purple-200" />
                   )}
@@ -74,8 +74,8 @@ export const LandingPage = () => {
               </div>
             ) : (
               <div className="flex flex-col items-start gap-4">
-                <div className="w-max overflow-hidden rounded-full shadow-[0_8px_30px_rgb(58,32,93,0.12)] transition-transform hover:-translate-y-0.5 hover:shadow-[0_8px_30px_rgb(58,32,93,0.2)]">
-                  <div className="bg-white px-2 py-1 flex items-center justify-center">
+                <div className="w-max overflow-hidden rounded-full shadow-[0_8px_32px_rgba(58,32,93,0.2)] transition-transform hover:-translate-y-0.5 hover:shadow-[0_8px_32px_rgba(58,32,93,0.3)] border border-white/50">
+                  <div className="bg-white/30 backdrop-blur-xl px-2 py-1 flex items-center justify-center">
                     <GoogleLogin
                       onSuccess={handleGoogleSuccess}
                       onError={() => setError('Google sign-in failed')}
@@ -104,19 +104,19 @@ export const LandingPage = () => {
         </div>
 
         {/* Right Column: Illustration */}
-        <div className="z-10 mt-12 flex w-full items-center justify-center lg:mt-0 lg:w-[50%] lg:justify-end">
-          <div className="relative w-full max-w-lg lg:max-w-2xl xl:max-w-3xl">
+        <div className="z-10 mt-12 hidden w-full items-center justify-center lg:mt-0 lg:flex lg:w-[50%] lg:justify-end opacity-0 animate-fade-in-up" style={{ animationDelay: '600ms' }}>
+          <div className="relative w-full max-w-lg lg:max-w-xl xl:max-w-2xl rounded-[3rem] bg-white/30 p-8 shadow-[0_8px_32px_rgba(58,32,93,0.2)] backdrop-blur-xl border border-white/50 lg:translate-x-8">
             <img 
               src="/hero-illustration.png" 
               alt="Students exchanging items" 
-              className="relative z-10 w-full object-contain mix-blend-multiply scale-110 lg:translate-x-12 opacity-95" 
+              className="relative z-10 w-full rounded-2xl object-contain mix-blend-multiply opacity-90" 
             />
           </div>
         </div>
       </div>
 
       {/* Bottom Feature Bar */}
-      <div className="absolute bottom-8 left-1/2 z-20 flex w-[90%] max-w-5xl -translate-x-1/2 flex-wrap items-center justify-between gap-4 rounded-3xl bg-white/95 px-6 py-4 shadow-[0_8px_40px_rgb(58,32,93,0.15)] backdrop-blur-xl md:flex-nowrap md:rounded-full md:px-12 md:py-6">
+      <div className="absolute bottom-8 left-1/2 z-20 hidden w-[90%] max-w-5xl -translate-x-1/2 flex-wrap items-center justify-between gap-4 rounded-3xl bg-white/30 px-6 py-4 shadow-[0_8px_32px_rgba(58,32,93,0.2)] border border-white/50 backdrop-blur-2xl md:flex md:flex-nowrap md:rounded-full md:px-12 md:py-6 opacity-0 animate-fade-in-up" style={{ animationDelay: '750ms' }}>
         
         <div className="flex items-center gap-3">
           <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#f0e6fa] text-[#4a2b75]">
