@@ -21,18 +21,19 @@ export const Header = () => {
         <div className="flex items-center gap-4">
 
           {user ? (
-            <div className="flex items-center gap-4 border-l pl-4">
+            <div className="flex items-center gap-3 sm:gap-4 sm:border-l sm:pl-4">
               <button
                 onClick={() => navigate('/listings/new')}
                 className="hidden sm:flex items-center gap-1 rounded-lg bg-primary-600 px-4 py-2 text-sm font-bold text-white shadow-sm hover:bg-primary-700 transition"
               >
                 + Post Item
               </button>
-              <Link to="/my-listings" className="text-sm font-semibold text-gray-600 hover:text-gray-900 transition">
-                My Listings
+              <Link to="/my-listings" className="text-sm font-semibold text-gray-600 hover:text-gray-900 transition flex items-center gap-1">
+                <svg className="h-5 w-5 sm:hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 002-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" /></svg>
+                <span className="hidden sm:block">My Listings</span>
               </Link>
               <Link to="/wishlist" className="text-sm font-semibold text-gray-600 hover:text-red-500 transition flex items-center gap-1">
-                <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" /></svg>
+                <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" /></svg>
                 <span className="hidden lg:block">Wishlist</span>
               </Link>
               <Link to="/profile" className="flex items-center gap-2 group">
@@ -47,9 +48,11 @@ export const Header = () => {
               </Link>
               <button
                 onClick={logout}
-                className="text-sm font-medium text-red-500 hover:text-red-700 transition"
+                className="text-sm font-medium text-red-500 hover:text-red-700 transition flex items-center gap-1"
+                title="Log Out"
               >
-                Log Out
+                <svg className="h-5 w-5 sm:hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" /></svg>
+                <span className="hidden sm:block">Log Out</span>
               </button>
             </div>
           ) : (
